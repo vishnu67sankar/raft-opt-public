@@ -1,0 +1,66 @@
+## change density to 1800 and 1800 for running the IPOPT simulation
+
+platform:
+    optimize: True
+    update_stability: True
+    design_variables: 
+        center_spar_d: 9.4
+        center_spar_h: 130
+    
+    secondary_design_variables:
+        l_fill_0: 29
+        l_fill_1: 29
+
+    bounds_design_variables:
+        center_spar_d: [8., 15.]    
+        center_spar_h: [85, 130]
+    
+    bounds_secondary_design_variables:
+        l_fill_0: [0.0, 29.0]
+        l_fill_1: [0.0, 29.0]
+      
+    outputs:
+        case_metrics: ['surge_max', 'sway_max', 'heave_max', 'roll_max', 'pitch_max', 'yaw_max', 'Mbase_max', 'AxRNA_max']
+        fowtList: ['sway', 'heave', 'roll', 'pitch', 'yaw', 'mass_fowt']
+        # eigen_frequencies: {'f_heave': 2, 'f_pitch': 3}
+        
+    
+    inequality_constraints:
+        # f_heave: [20.0, None]
+        # f_pitch: [30.0, None]
+        # sway: [-0.2, 0.2]
+        # heave: [-1.5, 1.5]
+        # roll: [-6.45e-04, 6.45e-04]
+        # pitch: [-0.0174533, 0.0174533]
+        pitch_max: [-10.0, 10.0]
+        # yaw: [-0.7,  0.7]
+        # AxRNA_max: [-3.9, 3.9]
+        # Mbase_max : [-1.82e+08, 1.82e+08]
+        # Mbase_max: [None, 14571312690] ## There are other constraints that can be incorporated in the framework
+        # pitch: [0, 0.0035]
+        # mass_fowt: [None, 6500] ## Please note that mass_fowt cannot be both a constraint and an objective function
+
+mooring:
+    optimize: False
+    update_stability: False
+    design_variables: None
+    secondary_design_variables: None
+    outputs: None
+    inequality_constraints: None
+
+objective_function: ['mass_fowt']
+objective_weights: [1.0]
+objective_reference: [700]
+p_values: [1.0]
+
+objective_function_alias: {'mass_fowt': 'weighted_raft_opt.weighted_multi_obj'}
+
+driver_information:
+    tolerance: 0.01
+    algorithm: SLSQP_PYOPT # Currently SLSQP, ALPSO, Diff_GA and COBYLA are supported in the framework
+    recorder_file_name: dummy.sql # Feel free to change the name of the file where values of all the design variables, objective functions and constraints are stored
+
+cases: # Only one environmental state
+        keys : [wind_speed, wind_heading, turbulence, turbine_status, yaw_misalign, wave_spectrum, wave_period, wave_height, wave_heading , current_speed, current_heading ]
+        data :  #   m/s        deg    % or e.g. 2B_NTM    string            deg         string          (s)         (m)         (deg)
+            -  [   10.5,         350,            0.01,       operating,          0,        JONSWAP,         8.1,        2.0,           325,    0.2,  0     ] ## case-1

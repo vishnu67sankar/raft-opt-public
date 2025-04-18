@@ -1,0 +1,39 @@
+Metadata-Version: 2.1
+Name: raft-opt
+Version: 2.0
+Summary: Optimization wrapper for RAFT
+Home-page: https://github.com/vishnu67sankar/raft-opt-modular
+Author: Vishnu Sankar Manivasakan
+Author-email: vishnu67sankar@gmail.com
+License: Apache Software License 2.0
+Keywords: raft_opt
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# raft-opt
+
+
+[![image](https://img.shields.io/pypi/v/raft-opt.svg)](https://pypi.python.org/pypi/raft-opt)
+[![image](https://img.shields.io/conda/vn/conda-forge/raft-opt.svg)](https://anaconda.org/conda-forge/raft-opt)
+
+
+**Optimization wrapper for RAFT**
+
+
+-   Free software: Apache Software License 2.0
+-   Documentation: https://vishnu67sankar.github.io/raft-opt
+    
+
+## Features
+
+-   TODO

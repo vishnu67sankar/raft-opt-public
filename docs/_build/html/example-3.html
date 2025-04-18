@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Example-3 &mdash; RAFT-OPT 2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="raft-opt-modular" href="modules.html" />
+    <link rel="prev" title="Example-2" href="example-2.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            RAFT-OPT
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="starting.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example-1.html">Example-1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example-2.html">Example-2</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Example-3</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#muliobjective-optimization">Muliobjective Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#user-input-file">User Input File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#calcuvate">Calcuvate</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#convergence-plots">Convergence Plots</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">raft-opt-modular</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RAFT-OPT</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Example-3</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/example-3.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="example-3">
+<h1>Example-3<a class="headerlink" href="#example-3" title="Permalink to this heading"></a></h1>
+<section id="muliobjective-optimization">
+<h2>Muliobjective Optimization<a class="headerlink" href="#muliobjective-optimization" title="Permalink to this heading"></a></h2>
+<p>So far we have looked at single point optimization, however, oceanic and wind variability
+cannot be overlooked in a design optimization process. In this example, the OC4 design is being
+optimized for multiple oceanic and wind states. Based on the data from Humboldt bay three oceanic and wind states
+with the highest variability. This example optimizes both the mass and tension across the three states.</p>
+<p>Open a local folder in your machine, and copy the
+<code class="docutils literal notranslate"><span class="pre">oc4_semisub.yaml</span></code> from the <code class="docutils literal notranslate"><span class="pre">example&gt;oc4_semisub</span></code>
+folder present in RAFT-Opt repository. This example consists of
+OC4 5 MW turbine designed by NREL. The setup file for this problem is shown below:</p>
+<section id="user-input-file">
+<h3>User Input File<a class="headerlink" href="#user-input-file" title="Permalink to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">cases</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">keys </span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">wind_speed</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wind_heading</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">turbulence</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">turbine_status</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">yaw_misalign</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wave_spectrum</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wave_period</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wave_height</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wave_heading</span><span class="w"> </span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">current_speed</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">current_heading</span><span class="w">  </span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">data </span><span class="p">:</span><span class="w">  </span><span class="c1">#   m/s        deg    % or e.g. 2B_NTM    string            deg         string          (s)         (m)         (deg)</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w">  </span><span class="p p-Indicator">[</span><span class="w">   </span><span class="nv">10.5</span><span class="p p-Indicator">,</span><span class="w">         </span><span class="nv">350</span><span class="p p-Indicator">,</span><span class="w">            </span><span class="nv">0.01</span><span class="p p-Indicator">,</span><span class="w">       </span><span class="nv">operating</span><span class="p p-Indicator">,</span><span class="w">          </span><span class="nv">0</span><span class="p p-Indicator">,</span><span class="w">        </span><span class="nv">JONSWAP</span><span class="p p-Indicator">,</span><span class="w">         </span><span class="nv">8.1</span><span class="p p-Indicator">,</span><span class="w">        </span><span class="nv">2.0</span><span class="p p-Indicator">,</span><span class="w">           </span><span class="nv">325</span><span class="p p-Indicator">,</span><span class="w">    </span><span class="nv">0.2</span><span class="p p-Indicator">,</span><span class="w">  </span><span class="nv">0</span><span class="w">     </span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1">## state-1</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w">  </span><span class="p p-Indicator">[</span><span class="w">   </span><span class="nv">9.5</span><span class="p p-Indicator">,</span><span class="w">         </span><span class="nv">335</span><span class="p p-Indicator">,</span><span class="w">            </span><span class="nv">0.01</span><span class="p p-Indicator">,</span><span class="w">       </span><span class="nv">operating</span><span class="p p-Indicator">,</span><span class="w">          </span><span class="nv">0</span><span class="p p-Indicator">,</span><span class="w">        </span><span class="nv">JONSWAP</span><span class="p p-Indicator">,</span><span class="w">         </span><span class="nv">10.5</span><span class="p p-Indicator">,</span><span class="w">        </span><span class="nv">2.1</span><span class="p p-Indicator">,</span><span class="w">           </span><span class="nv">300</span><span class="p p-Indicator">,</span><span class="w">    </span><span class="nv">0.22</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0</span><span class="w">     </span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1">## state-2</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w">  </span><span class="p p-Indicator">[</span><span class="w">   </span><span class="nv">15.0</span><span class="p p-Indicator">,</span><span class="w">         </span><span class="nv">325</span><span class="p p-Indicator">,</span><span class="w">            </span><span class="nv">0.01</span><span class="p p-Indicator">,</span><span class="w">       </span><span class="nv">operating</span><span class="p p-Indicator">,</span><span class="w">          </span><span class="nv">0</span><span class="p p-Indicator">,</span><span class="w">        </span><span class="nv">JONSWAP</span><span class="p p-Indicator">,</span><span class="w">         </span><span class="nv">11.7</span><span class="p p-Indicator">,</span><span class="w">        </span><span class="nv">3.2</span><span class="p p-Indicator">,</span><span class="w">           </span><span class="nv">300</span><span class="p p-Indicator">,</span><span class="w">    </span><span class="nv">0.4</span><span class="p p-Indicator">,</span><span class="w">  </span><span class="nv">0</span><span class="w">     </span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1">## state-3</span>
+
+<span class="nt">p_values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.675</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.25</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.075</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1">## probability of each state above</span>
+
+<span class="nt">platform</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">optimize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
+<span class="w">    </span><span class="nt">update_stability</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="w">    </span><span class="nt">design_variables</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">lower_column_d</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">24</span>
+<span class="w">        </span><span class="nt">upper_column_d</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">12</span>
+
+<span class="w">    </span><span class="nt">secondary_design_variables</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">lower_column_l_fill</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.84</span>
+<span class="w">        </span><span class="nt">upper_column_l_fill</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.2988</span>
+
+<span class="w">    </span><span class="nt">bounds_design_variables</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">lower_column_d</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">20.</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">28.</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">upper_column_d</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">5.</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">20.</span><span class="p p-Indicator">]</span>
+
+<span class="w">    </span><span class="nt">bounds_secondary_design_variables</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">lower_column_l_fill</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">1.0</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">upper_column_l_fill</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">1.0</span><span class="p p-Indicator">]</span>
+
+<span class="w">    </span><span class="nt">outputs</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">case_metrics</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;surge_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;sway_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;heave_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;roll_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;pitch_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;yaw_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;Mbase_max&#39;</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">fowtList</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;heave&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;pitch&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;mass_fowt&#39;</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">eigen_frequencies</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="s">&#39;f_heave&#39;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="nv">2</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;f_pitch&#39;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="nv">3</span><span class="p p-Indicator">}</span>
+
+<span class="w">    </span><span class="nt">secondary_outputs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
+
+<span class="w">    </span><span class="nt">inequality_constraints</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">f_heave</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">18.5</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">None</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">f_pitch</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">30.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">None</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">pitch_max</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">-10.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">10.0</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">surge_max</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">-20.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">20.0</span><span class="p p-Indicator">]</span>
+
+<span class="w">    </span><span class="nt">secondary_inequality_constraints</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
+<span class="w">    </span><span class="nt">secondary_outputs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
+
+<span class="nt">mooring</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">optimize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
+<span class="w">    </span><span class="nt">update_stability</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="w">    </span><span class="nt">design_variables</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">line_length</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">800</span>
+<span class="w">        </span><span class="nt">line_dia</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0766</span>
+
+<span class="w">    </span><span class="nt">bounds_design_variables</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">line_length</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">500.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">1200.0</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">line_dia</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.002</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.2</span><span class="p p-Indicator">]</span>
+
+<span class="w">    </span><span class="nt">secondary_design_variables</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
+<span class="w">    </span><span class="nt">outputs</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">fowtList</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;tension&#39;</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">MBL</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;MBL&#39;</span><span class="p p-Indicator">]</span>
+
+<span class="w">    </span><span class="nt">inequality_constraints</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">MBL</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">2.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">None</span><span class="p p-Indicator">]</span>
+
+<span class="w">    </span><span class="nt">secondary_inequality_constraints</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
+<span class="w">    </span><span class="nt">secondary_outputs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
+
+<span class="nt">objective_function</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;mass_fowt&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;tension&#39;</span><span class="p p-Indicator">]</span>
+<span class="nt">objective_weights</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.75</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.25</span><span class="p p-Indicator">]</span>
+<span class="nt">objective_reference</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">2750</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">300000.0</span><span class="p p-Indicator">]</span>
+
+<span class="nt">driver_information</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">tolerance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.01</span>
+<span class="w">    </span><span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SLSQP</span><span class="w"> </span><span class="c1"># Currently SLSQP, SLSQP_PYOPT, ALPSO, Diff_GA and COBYLA are supported in the framework</span>
+<span class="w">    </span><span class="nt">recorder_file_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dummy.sql</span><span class="w"> </span><span class="c1"># Feel free to change the name of the file where values of all the design variables, objective functions and constraints are stored</span>
+</pre></div>
+</div>
+</section>
+<section id="calcuvate">
+<h3>Calcuvate<a class="headerlink" href="#calcuvate" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">raft</span>
+<span class="kn">import</span> <span class="nn">openmdao.api</span> <span class="k">as</span> <span class="nn">om</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="nd">@contextmanager</span>
+<span class="k">def</span> <span class="nf">suppress_stdout</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">devnull</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">devnull</span><span class="p">:</span>
+        <span class="n">old_stdout</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">devnull</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">yield</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">old_stdout</span>
+
+<span class="k">def</span> <span class="nf">_updateMoorings</span><span class="p">(</span><span class="n">n_columns</span><span class="p">,</span> <span class="n">fairlead</span><span class="p">,</span> <span class="n">lower_column</span><span class="p">,</span> <span class="n">ms</span><span class="p">,</span> <span class="n">line_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">line_dia</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+    <span class="n">depth</span>     <span class="o">=</span> <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;water_depth&#39;</span><span class="p">]</span>                             <span class="c1"># water depth [m]</span>
+    <span class="n">start_angle</span> <span class="o">=</span> <span class="mi">60</span>
+    <span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start_angle</span><span class="p">,</span> <span class="n">start_angle</span><span class="o">+</span><span class="mi">360</span><span class="p">,</span> <span class="n">n_columns</span><span class="o">+</span><span class="mi">1</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>                 <span class="c1"># line headings list [rad]</span>
+    <span class="c1"># angles    = np.radians([0, 120, 240])</span>
+    <span class="n">rAnchor</span>   <span class="o">=</span> <span class="mf">837.6</span> <span class="o">-</span> <span class="mf">40.868</span> <span class="o">+</span> <span class="n">fairlead</span>                            <span class="c1"># anchor radius/spacing [m]</span>
+    <span class="n">zFair</span>     <span class="o">=</span> <span class="o">-</span><span class="mi">14</span>                             <span class="c1"># fairlead z elevation [m]</span>
+    <span class="n">rFair</span>     <span class="o">=</span> <span class="n">fairlead</span>                              <span class="c1"># fairlead radius [m]</span>
+    <span class="n">lineLength</span><span class="o">=</span> <span class="mf">835.5</span>                            <span class="c1"># line unstretched length [m]</span>
+    <span class="n">typeName</span>  <span class="o">=</span> <span class="s2">&quot;drag_embedment&quot;</span>                        <span class="c1"># identifier string for the line type</span>
+
+    <span class="n">n_points</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ms</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;line2_vessel&#39;</span><span class="p">):</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;location&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=-</span><span class="mi">1</span><span class="o">*</span><span class="p">(</span><span class="n">lower_column</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">lower_column</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;line1_vessel&#39;</span><span class="p">):</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;location&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">lower_column</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">lower_column</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">6</span><span class="p">))</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;location&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">lower_column</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">lower_column</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">6</span><span class="p">))</span>
+
+        <span class="k">elif</span> <span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;line3_vessel&#39;</span><span class="p">):</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;location&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">lower_column</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">lower_column</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">6</span><span class="p">))</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;location&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="p">(</span><span class="n">lower_column</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">lower_column</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">6</span><span class="p">))</span>
+
+        <span class="k">elif</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;line1_anchor&#39;</span><span class="p">):</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;location&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">line_length</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;location&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">line_length</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.75</span><span class="p">)</span>
+
+        <span class="k">elif</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;line2_anchor&#39;</span><span class="p">):</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;location&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="p">(</span><span class="n">line_length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">elif</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;line3_anchor&#39;</span><span class="p">):</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;location&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">line_length</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;location&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="p">(</span><span class="n">line_length</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.75</span><span class="p">)</span>
+
+
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;lines&#39;</span><span class="p">]:</span>
+        <span class="n">item</span><span class="p">[</span><span class="s1">&#39;length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">line_length</span>
+
+    <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;line_types&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;diameter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">line_dia</span>
+    <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;line_types&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;mass_density&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">20.0e3</span> <span class="o">*</span> <span class="n">line_dia</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;line_types&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;stiffness&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">85.6e9</span><span class="o">*</span><span class="p">(</span><span class="n">line_dia</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">3.93e7</span><span class="o">*</span><span class="p">(</span><span class="n">line_dia</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span>
+    <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;line_types&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;breaking_load&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">9.11e2</span><span class="o">*</span><span class="p">(</span><span class="n">line_dia</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.21e9</span><span class="o">*</span><span class="p">(</span><span class="n">line_dia</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">2.19e9</span><span class="o">*</span><span class="p">(</span><span class="n">line_dia</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">ms</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_updateCrossbrace</span><span class="p">(</span><span class="n">main_column</span><span class="p">,</span> <span class="n">lower_column</span><span class="p">,</span> <span class="n">upper_column</span><span class="p">,</span> <span class="n">pontoons</span><span class="p">,</span> <span class="n">cross_brace</span><span class="p">):</span>
+
+    <span class="n">cross_brace</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">main_column</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span> <span class="c1"># update x coordinate</span>
+    <span class="n">cross_brace</span><span class="p">[</span><span class="s1">&#39;rB&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">upper_column</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">upper_column</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span> <span class="c1"># update x coordinate</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">cross_brace</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_updatePontoons</span><span class="p">(</span><span class="n">main_column</span><span class="p">,</span> <span class="n">lower_column</span><span class="p">,</span> <span class="n">upper_column</span><span class="p">,</span> <span class="n">pontoons</span><span class="p">):</span>
+
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">pontoons</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;delta_upper_pontoon&#39;</span><span class="p">:</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">upper_column</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">upper_column</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">upper_column</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;rB&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">upper_column</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">6</span><span class="p">)</span> <span class="o">-</span> <span class="n">upper_column</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">))</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;rB&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">upper_column</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">6</span><span class="p">)</span> <span class="o">-</span> <span class="n">upper_column</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;delta_lower_pontoon&#39;</span><span class="p">:</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">lower_column</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">lower_column</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">lower_column</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;rB&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">lower_column</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">6</span><span class="p">)</span> <span class="o">-</span> <span class="n">lower_column</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">))</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;rB&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">lower_column</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">6</span><span class="p">)</span> <span class="o">-</span> <span class="n">lower_column</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Y_upper_pontoon&#39;</span><span class="p">:</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">main_column</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;rB&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">upper_column</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">upper_column</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span>
+
+        <span class="k">elif</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Y_lower_pontoon&#39;</span><span class="p">:</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">main_column</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;rB&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">lower_column</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">lower_column</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">pontoons</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_updateColumns</span><span class="p">(</span><span class="n">lower_column</span><span class="p">,</span> <span class="n">upper_column</span><span class="p">,</span> <span class="n">x_platform</span><span class="p">):</span>
+
+    <span class="n">lower_column</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_platform</span><span class="p">[</span><span class="s1">&#39;lower_column_d&#39;</span><span class="p">]</span>
+    <span class="n">upper_column</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_platform</span><span class="p">[</span><span class="s1">&#39;upper_column_d&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">lower_column</span><span class="p">,</span> <span class="n">upper_column</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">calcuvate</span><span class="p">(</span><span class="n">design</span><span class="p">,</span> <span class="n">x_platform</span><span class="p">,</span> <span class="n">x_mooring</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">main_column</span> <span class="o">=</span> <span class="n">design</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">][</span><span class="s1">&#39;members&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">lower_column</span> <span class="o">=</span> <span class="n">design</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">][</span><span class="s1">&#39;members&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">upper_column</span> <span class="o">=</span> <span class="n">design</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">][</span><span class="s1">&#39;members&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">pontoons</span> <span class="o">=</span> <span class="n">design</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">][</span><span class="s1">&#39;members&#39;</span><span class="p">][</span><span class="mi">3</span><span class="p">:]</span>
+    <span class="n">cross_brace</span> <span class="o">=</span> <span class="n">design</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">][</span><span class="s1">&#39;members&#39;</span><span class="p">][</span><span class="mi">7</span><span class="p">]</span>
+    <span class="n">ms</span> <span class="o">=</span> <span class="n">design</span><span class="p">[</span><span class="s1">&#39;mooring&#39;</span><span class="p">]</span>
+
+    <span class="n">lower_column</span><span class="p">,</span> <span class="n">upper_column</span> <span class="o">=</span> <span class="n">_updateColumns</span><span class="p">(</span><span class="n">lower_column</span><span class="p">,</span> <span class="n">upper_column</span><span class="p">,</span> <span class="n">x_platform</span><span class="p">)</span>
+    <span class="n">pontoons</span> <span class="o">=</span> <span class="n">_updatePontoons</span><span class="p">(</span><span class="n">main_column</span><span class="p">,</span> <span class="n">lower_column</span><span class="p">,</span> <span class="n">upper_column</span><span class="p">,</span> <span class="n">pontoons</span><span class="p">)</span>
+    <span class="n">cross_brace</span> <span class="o">=</span> <span class="n">_updateCrossbrace</span><span class="p">(</span><span class="n">main_column</span><span class="p">,</span> <span class="n">lower_column</span><span class="p">,</span> <span class="n">upper_column</span><span class="p">,</span> <span class="n">pontoons</span><span class="p">,</span> <span class="n">cross_brace</span><span class="p">)</span>
+    <span class="n">fairlead</span> <span class="o">=</span> <span class="n">lower_column</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">lower_column</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span>
+
+    <span class="n">line_length</span> <span class="o">=</span> <span class="n">x_mooring</span><span class="p">[</span><span class="s1">&#39;line_length&#39;</span><span class="p">]</span>
+    <span class="n">line_dia</span> <span class="o">=</span> <span class="n">x_mooring</span><span class="p">[</span><span class="s1">&#39;line_dia&#39;</span><span class="p">]</span>
+
+    <span class="n">ms</span> <span class="o">=</span> <span class="n">_updateMoorings</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">fairlead</span><span class="p">,</span> <span class="n">lower_column</span><span class="p">,</span> <span class="n">ms</span><span class="p">,</span> <span class="n">line_length</span><span class="p">,</span> <span class="n">line_dia</span><span class="p">)</span>
+
+    <span class="n">design</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">][</span><span class="s1">&#39;members&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">lower_column</span>
+    <span class="n">design</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">][</span><span class="s1">&#39;members&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">upper_column</span>
+    <span class="n">design</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">][</span><span class="s1">&#39;members&#39;</span><span class="p">][</span><span class="mi">3</span><span class="p">:]</span> <span class="o">=</span> <span class="n">pontoons</span>
+    <span class="n">design</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">][</span><span class="s1">&#39;members&#39;</span><span class="p">][</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="n">cross_brace</span>
+    <span class="n">design</span><span class="p">[</span><span class="s1">&#39;mooring&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ms</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">design</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">MBL</span><span class="p">(</span><span class="n">design</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x_platform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x_mooring</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">breaking_load</span> <span class="o">=</span> <span class="n">design</span><span class="p">[</span><span class="s1">&#39;mooring&#39;</span><span class="p">][</span><span class="s1">&#39;line_types&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;breaking_load&#39;</span><span class="p">]</span>
+    <span class="n">MBL</span> <span class="o">=</span> <span class="n">breaking_load</span><span class="o">/</span><span class="nb">max</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">fowtList</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ms</span><span class="o">.</span><span class="n">getTensions</span><span class="p">())</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">MBL</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Place the <code class="docutils literal notranslate"><span class="pre">calculate.py</span></code> file in the same directory.
+And create the optimization setup as shown below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">raft_opt</span> <span class="kn">import</span> <span class="n">raft_opt</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">raft</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">multi_point_opt</span><span class="p">():</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;multi_pt_final_1.txt&quot;</span>
+    <span class="n">design_file</span> <span class="o">=</span> <span class="s1">&#39;oc4_semisub.yaml&#39;</span>
+    <span class="n">user_input_file</span> <span class="o">=</span> <span class="s1">&#39;user_input.yaml&#39;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">design_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">design</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">user_input_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">user_input</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
+
+    <span class="n">user_input</span><span class="p">[</span><span class="s1">&#39;driver_information&#39;</span><span class="p">][</span><span class="s1">&#39;recorder_file_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;multi_pt_final_1.sql&#39;</span>
+    <span class="n">current_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+    <span class="n">calcuvate_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_dir</span><span class="p">,</span> <span class="s1">&#39;calcuvate.py&#39;</span><span class="p">)</span>
+
+    <span class="n">p_values</span> <span class="o">=</span> <span class="n">user_input</span><span class="p">[</span><span class="s1">&#39;p_values&#39;</span><span class="p">]</span>
+    <span class="n">cases</span> <span class="o">=</span> <span class="n">user_input</span><span class="p">[</span><span class="s1">&#39;cases&#39;</span><span class="p">]</span>
+    <span class="n">optimized_design</span><span class="p">,</span> <span class="n">user_input</span> <span class="o">=</span> <span class="n">raft_opt</span><span class="o">.</span><span class="n">run_weighted_opt</span><span class="p">(</span><span class="n">design</span><span class="p">,</span> <span class="n">user_input</span><span class="p">,</span> <span class="n">cases</span><span class="p">,</span> <span class="n">p_values</span><span class="p">,</span> <span class="n">calcuvate_path</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">single_point_opt</span><span class="p">()</span>
+    <span class="c1"># multi_point_opt()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start</span><span class="si">}</span><span class="s2"> seconds elapsed&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="convergence-plots">
+<h4>Convergence Plots<a class="headerlink" href="#convergence-plots" title="Permalink to this heading"></a></h4>
+<img alt="_images/tension1.png" src="_images/tension1.png" />
+<img alt="_images/mass.png" src="_images/mass.png" />
+<img alt="_images/lower_column_d.png" src="_images/lower_column_d.png" />
+<img alt="_images/upper_column_d.png" src="_images/upper_column_d.png" />
+<img alt="_images/line_length.png" src="_images/line_length.png" />
+<img alt="_images/line_dia.png" src="_images/line_dia.png" />
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="example-2.html" class="btn btn-neutral float-left" title="Example-2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="raft-opt-modular" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Vishnu Sankar Manivasakan, Stein Housner.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

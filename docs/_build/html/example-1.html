@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Example-1 &mdash; RAFT-OPT 2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Example-2" href="example-2.html" />
+    <link rel="prev" title="Tutorial" href="tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            RAFT-OPT
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="starting.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Example-1</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#spar-buoy-optimization">Spar-buoy Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#user-input-file">User Input File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#calcuvate">Calcuvate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-1-set-up">Example-1 Set-up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#results">Results</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#spar-diameter-convergence">Spar Diameter Convergence</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maximum-pitch-convergence">Maximum Pitch Convergence</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mass-convergence">Mass Convergence</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="example-2.html">Example-2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">raft-opt-modular</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RAFT-OPT</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Example-1</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/example-1.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="example-1">
+<h1>Example-1<a class="headerlink" href="#example-1" title="Permalink to this heading"></a></h1>
+<section id="spar-buoy-optimization">
+<h2>Spar-buoy Optimization<a class="headerlink" href="#spar-buoy-optimization" title="Permalink to this heading"></a></h2>
+<p>Open a local folder in your machine, and copy the
+<code class="docutils literal notranslate"><span class="pre">design_file.yaml</span></code> from the <code class="docutils literal notranslate"><span class="pre">example&gt;spar_buoy</span></code>
+folder present in RAFT-Opt repository. This example consists of
+the 5MW OC3-Hywind spar buoy design. To keeps things simple
+let’s just optimize the platform geometry. The setup file for this
+problem is given below:</p>
+<section id="user-input-file">
+<h3>User Input File<a class="headerlink" href="#user-input-file" title="Permalink to this heading"></a></h3>
+<img alt="_images/spar_buoy.png" src="_images/spar_buoy.png" />
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">platform</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">optimize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
+<span class="w">    </span><span class="nt">update_stability</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
+<span class="w">    </span><span class="nt">design_variables</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">center_spar_d</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9.4</span>
+<span class="w">        </span><span class="nt">center_spar_h</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">130</span>
+
+<span class="w">    </span><span class="nt">secondary_design_variables</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">l_fill_0</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">29</span>
+<span class="w">        </span><span class="nt">l_fill_1</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">29</span>
+
+<span class="w">    </span><span class="nt">bounds_design_variables</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">center_spar_d</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">8.</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">15.</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">center_spar_h</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">85</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">130</span><span class="p p-Indicator">]</span>
+
+<span class="w">    </span><span class="nt">bounds_secondary_design_variables</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">l_fill_0</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">29.0</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">l_fill_1</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">29.0</span><span class="p p-Indicator">]</span>
+
+<span class="w">    </span><span class="nt">outputs</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">case_metrics</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;surge_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;sway_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;heave_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;roll_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;pitch_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;yaw_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;Mbase_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;AxRNA_max&#39;</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">fowtList</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;sway&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;heave&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;roll&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;pitch&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;yaw&#39;</span><span class="p p-Indicator">]</span>
+
+<span class="w">    </span><span class="nt">inequality_constraints</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">pitch_max</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">-10.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">10.0</span><span class="p p-Indicator">]</span>
+
+<span class="nt">mooring</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">optimize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="w">    </span><span class="nt">update_stability</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="w">    </span><span class="nt">design_variables</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
+<span class="w">    </span><span class="nt">outputs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
+<span class="w">    </span><span class="nt">inequality_constraints</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
+
+<span class="nt">objective_function</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;mass_fowt&#39;</span><span class="p p-Indicator">]</span>
+
+<span class="nt">driver_information</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">tolerance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.01</span>
+<span class="w">    </span><span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SLSQP</span><span class="w"> </span><span class="c1"># Currently SLSQP, ALPSO, Diff_GA and COBYLA are supported in the framework</span>
+<span class="w">    </span><span class="nt">recorder_file_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">results.sql</span><span class="w"> </span><span class="c1"># Feel free to change the name of the file where values of all the design variables, objective functions and constraints are stored</span>
+</pre></div>
+</div>
+<p>The only inequality constraints is pitch needs to be higher
+than -10 degrees but lower than 10 degrees for a FOWT.
+Since we are not interested in optimizing the mooring line
+configuration <code class="docutils literal notranslate"><span class="pre">optimize</span></code> and <code class="docutils literal notranslate"><span class="pre">update_stability</span></code> are set
+to be <code class="docutils literal notranslate"><span class="pre">False</span></code>. The <code class="docutils literal notranslate"><span class="pre">objective_function</span></code> we would like
+to minimize is the overall mass of the FOWT system.</p>
+</section>
+<section id="calcuvate">
+<h3>Calcuvate<a class="headerlink" href="#calcuvate" title="Permalink to this heading"></a></h3>
+<p>Now let’s take a look at the code logic of <code class="docutils literal notranslate"><span class="pre">calcuvate.py</span></code> file.
+The aim of this file is to calculate the design for the next Optimization
+iteration based on the values of <code class="docutils literal notranslate"><span class="pre">design_variables</span></code> and <code class="docutils literal notranslate"><span class="pre">secondary_design_variables</span></code>
+from he current iteration. So we want to update the platform
+geometry and fairlead positions (since the coordinates depend on the spar diameter).
+So first let’s go ahead and define the function <code class="docutils literal notranslate"><span class="pre">calcuvate()</span></code>
+that contains the code logic as shown below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calcuvate</span><span class="p">(</span><span class="n">design</span><span class="p">,</span> <span class="n">x_platform</span><span class="p">,</span> <span class="n">x_mooring</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="n">center_spar</span> <span class="o">=</span> <span class="n">design</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">][</span><span class="s1">&#39;members&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ms</span> <span class="o">=</span> <span class="n">design</span><span class="p">[</span><span class="s1">&#39;mooring&#39;</span><span class="p">]</span>
+
+<span class="n">center_spar</span> <span class="o">=</span> <span class="n">_updateColumns</span><span class="p">(</span><span class="n">center_spar</span><span class="p">,</span> <span class="n">x_platform</span><span class="p">)</span>
+
+<span class="n">ms</span> <span class="o">=</span> <span class="n">_updateMoorings</span><span class="p">(</span><span class="n">center_spar</span><span class="p">,</span> <span class="n">ms</span><span class="p">)</span>
+
+<span class="n">design</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">][</span><span class="s1">&#39;members&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">center_spar</span>
+<span class="n">design</span><span class="p">[</span><span class="s1">&#39;mooring&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ms</span>
+
+<span class="k">return</span> <span class="p">(</span><span class="n">design</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now we define the function <code class="docutils literal notranslate"><span class="pre">_updateColumns()</span></code> to update the geometry of
+the platform as shown below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_updateColumns</span><span class="p">(</span><span class="n">center_spar</span><span class="p">,</span> <span class="n">x_platform</span><span class="p">):</span>
+<span class="n">freeboard</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="c1">## Geometry of the platform</span>
+<span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_platform</span><span class="p">[</span><span class="s1">&#39;center_spar_d&#39;</span><span class="p">]</span>
+<span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_platform</span><span class="p">[</span><span class="s1">&#39;center_spar_d&#39;</span><span class="p">]</span>                    <span class="c1"># adjusting the diamter of column of the spar</span>
+<span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_platform</span><span class="p">[</span><span class="s1">&#39;center_spar_d&#39;</span><span class="p">]</span>
+<span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_platform</span><span class="p">[</span><span class="s1">&#39;center_spar_d&#39;</span><span class="p">]</span>
+<span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">x_platform</span><span class="p">[</span><span class="s1">&#39;center_spar_h&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">freeboard</span>       <span class="c1"># adjusting the z coordinate of the keel</span>
+<span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;stations&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">x_platform</span><span class="p">[</span><span class="s1">&#39;center_spar_h&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">freeboard</span>
+<span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;stations&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;stations&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">30.</span>
+<span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;stations&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;stations&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">30.</span>
+<span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;cap_stations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;stations&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span>
+
+<span class="c1">## Adjusted l_fill values that ensure static stability</span>
+<span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;l_fill&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_platform</span><span class="p">[</span><span class="s1">&#39;l_fill_0&#39;</span><span class="p">]</span>
+<span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;l_fill&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_platform</span><span class="p">[</span><span class="s1">&#39;l_fill_1&#39;</span><span class="p">]</span>
+
+<span class="k">return</span> <span class="p">(</span><span class="n">center_spar</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Once we have updated the platform geometry we now
+define the function <code class="docutils literal notranslate"><span class="pre">_updateMoorings()</span></code> to update the
+fairlead positions based on the modified spar geometry.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_updateMoorings</span><span class="p">(</span><span class="n">center_spar</span><span class="p">,</span> <span class="n">ms</span><span class="p">):</span>
+    <span class="n">z_fair_fraction</span> <span class="o">=</span> <span class="mi">70</span><span class="o">/</span><span class="mi">120</span>                    <span class="c1"># ratio of z_fairlead and z_keel is kept constant</span>
+    <span class="n">depth</span> <span class="o">=</span> <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;water_depth&#39;</span><span class="p">]</span>                   <span class="c1"># water depth [m]</span>
+    <span class="n">xAnchor</span> <span class="o">=</span> <span class="mf">853.87</span>                            <span class="c1"># anchor radius/spacing [m]</span>
+    <span class="n">zAnchor</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">depth</span>                           <span class="c1"># fairlead z elevation [m]</span>
+    <span class="n">xFair</span> <span class="o">=</span> <span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">0.5</span>                              <span class="c1"># fairlead radius [m]</span>
+    <span class="n">zFair</span> <span class="o">=</span> <span class="n">z_fair_fraction</span><span class="o">*</span><span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="n">lineLength</span><span class="o">=</span> <span class="mf">902.2</span>                            <span class="c1"># line unstretched length [m]</span>
+    <span class="n">typeName</span>  <span class="o">=</span> <span class="s2">&quot;drag_embedment&quot;</span>                        <span class="c1"># identifier string for the line type</span>
+
+    <span class="k">for</span> <span class="n">lines</span> <span class="ow">in</span> <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">lines</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;line1_vessel&#39;</span><span class="p">:</span>
+            <span class="n">lines</span><span class="p">[</span><span class="s1">&#39;location&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">xFair</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">zFair</span><span class="p">]</span>
+
+        <span class="k">elif</span> <span class="n">lines</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;line2_vessel&#39;</span><span class="p">:</span>
+            <span class="n">lines</span><span class="p">[</span><span class="s1">&#39;location&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">xFair</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">30</span><span class="p">)),</span> <span class="n">xFair</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">30</span><span class="p">)),</span> <span class="n">zFair</span><span class="p">]</span>
+
+        <span class="k">elif</span> <span class="n">lines</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;line3_vessel&#39;</span><span class="p">:</span>
+            <span class="n">lines</span><span class="p">[</span><span class="s1">&#39;location&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">xFair</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">30</span><span class="p">)),</span> <span class="o">-</span><span class="n">xFair</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">30</span><span class="p">)),</span> <span class="n">zFair</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">ms</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Place the <code class="docutils literal notranslate"><span class="pre">calculate.py</span></code> file in the same directory.
+Now let’s see how to set-up the optimization problem.</p>
+</section>
+<section id="example-1-set-up">
+<h3>Example-1 Set-up<a class="headerlink" href="#example-1-set-up" title="Permalink to this heading"></a></h3>
+<p>Open a new python file in the same directory, and follow the code below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">raft_opt</span> <span class="kn">import</span> <span class="n">raft_opt</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">raft</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;output.txt&quot;</span>
+<span class="n">design_file</span> <span class="o">=</span> <span class="s1">&#39;spar-buoy.yaml&#39;</span>
+<span class="n">user_input_file</span> <span class="o">=</span> <span class="s1">&#39;user_input.yaml&#39;</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">design_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">design</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">user_input_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">user_input</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
+
+<span class="n">design</span><span class="p">[</span><span class="s1">&#39;cases&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">user_input</span><span class="p">[</span><span class="s1">&#39;cases&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">user_input</span><span class="p">[</span><span class="s1">&#39;driver_information&#39;</span><span class="p">][</span><span class="s1">&#39;recorder_file_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;spar-buoy.sql&#39;</span>
+<span class="n">current_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+<span class="n">calcuvate_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_dir</span><span class="p">,</span> <span class="s1">&#39;calcuvate.py&#39;</span><span class="p">)</span>
+<span class="n">start_t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="n">optimized_design</span><span class="p">,</span> <span class="n">user_input</span> <span class="o">=</span> <span class="n">raft_opt</span><span class="o">.</span><span class="n">run_opt</span><span class="p">(</span><span class="n">design</span><span class="p">,</span> <span class="n">user_input</span><span class="p">,</span> <span class="n">calcuvate_path</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>                                             <span class="c1"># Runs geometric optimization</span>
+<span class="n">optimized_design</span><span class="p">,</span> <span class="n">user_input</span> <span class="o">=</span> <span class="n">raft_opt_modular</span><span class="o">.</span><span class="n">run_stability</span><span class="p">(</span><span class="n">optimized_design</span><span class="p">,</span> <span class="n">user_input</span><span class="p">,</span> <span class="n">calcuvate_path</span><span class="p">,</span> <span class="s1">&#39;spar-buoy_stability.txt&#39;</span><span class="p">)</span>  <span class="c1"># Runs stability optimization</span>
+<span class="n">end_t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Time taken for the simulation = </span><span class="si">{</span><span class="n">end_t</span><span class="o">-</span><span class="n">start_t</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;optimized_design.yaml&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">optimized_design</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">default_flow_style</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Meanwhile to monitor the convergence history of the
+optimization process, import the the <code class="docutils literal notranslate"><span class="pre">visualizer.py</span></code> file from raft-opt, as shown below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">raft_opt</span> <span class="kn">import</span> <span class="n">visualizer</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">sql_file</span> <span class="o">=</span> <span class="s1">&#39;output.sql&#39;</span>
+    <span class="n">design_file</span> <span class="o">=</span> <span class="s1">&#39;spar-buoy.yaml&#39;</span>
+    <span class="n">visualizer</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">sql_file</span><span class="p">,</span> <span class="n">design_file</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Save the file in the same directory as your .sql file that is being generated. Let’s say the name of your file is convergence_history.
+Now open a terminal, and run the following <code class="docutils literal notranslate"><span class="pre">streamlit</span> <span class="pre">run</span> <span class="pre">convergence_history.py</span></code></p>
+</section>
+<section id="results">
+<h3>Results<a class="headerlink" href="#results" title="Permalink to this heading"></a></h3>
+<p>The convergence history of those plots are compared below:
+Comparison of different optimal designs</p>
+<section id="spar-diameter-convergence">
+<h4>Spar Diameter Convergence<a class="headerlink" href="#spar-diameter-convergence" title="Permalink to this heading"></a></h4>
+<img alt="_images/spar_dia.png" src="_images/spar_dia.png" />
+</section>
+<section id="maximum-pitch-convergence">
+<h4>Maximum Pitch Convergence<a class="headerlink" href="#maximum-pitch-convergence" title="Permalink to this heading"></a></h4>
+<img alt="_images/pitch_max.png" src="_images/pitch_max.png" />
+</section>
+<section id="mass-convergence">
+<h4>Mass Convergence<a class="headerlink" href="#mass-convergence" title="Permalink to this heading"></a></h4>
+<img alt="_images/mass_fowt.png" src="_images/mass_fowt.png" />
+<p><strong>Note</strong>: Different initial designs can lead to different optimal designs.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tutorial.html" class="btn btn-neutral float-left" title="Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="example-2.html" class="btn btn-neutral float-right" title="Example-2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Vishnu Sankar Manivasakan, Stein Housner.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

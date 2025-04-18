@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial &mdash; RAFT-OPT 2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Example-1" href="example-1.html" />
+    <link rel="prev" title="Getting Started" href="starting.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            RAFT-OPT
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="starting.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#user-input-file">User Input File</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#objective-functions">Objective Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#platform">Platform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooring">Mooring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimization-settings">Optimization Settings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#calcuvate-py">Calcuvate.py</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="example-1.html">Example-1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example-2.html">Example-2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">raft-opt-modular</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RAFT-OPT</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/tutorial.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this heading"></a></h1>
+<p>In this tutorial, we will guide you through all the necessary
+steps to run a Floating Offshore Wind Turbine (FOWT)
+optimization problem. There are three key files required
+to run any optimization using RAFT-Opt:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">design_file.yaml</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">user_input.yaml</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">calcuvate.py</span></code></p></li>
+</ul>
+<section id="user-input-file">
+<h2>User Input File<a class="headerlink" href="#user-input-file" title="Permalink to this heading"></a></h2>
+<p>The user input file is where the optimization problem needs
+to be set up. This YAML file consists of the following components:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">cases</span><span class="p">:</span><span class="w"> </span><span class="c1"># Only one environmental state</span>
+<span class="w">    </span><span class="nt">keys </span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">wind_speed</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wind_heading</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">turbulence</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">turbine_status</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">yaw_misalign</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wave_spectrum</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wave_period</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wave_height</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wave_heading</span><span class="w"> </span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">current_speed</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">current_heading</span><span class="w"> </span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">data </span><span class="p">:</span><span class="w">  </span><span class="c1">#   m/s        deg    % or e.g. 2B_NTM    string            deg         string          (s)         (m)         (deg)</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w">  </span><span class="p p-Indicator">[</span><span class="w">   </span><span class="nv">10.5</span><span class="p p-Indicator">,</span><span class="w">         </span><span class="nv">350</span><span class="p p-Indicator">,</span><span class="w">            </span><span class="nv">0.01</span><span class="p p-Indicator">,</span><span class="w">       </span><span class="nv">operating</span><span class="p p-Indicator">,</span><span class="w">          </span><span class="nv">0</span><span class="p p-Indicator">,</span><span class="w">        </span><span class="nv">JONSWAP</span><span class="p p-Indicator">,</span><span class="w">         </span><span class="nv">8.1</span><span class="p p-Indicator">,</span><span class="w">        </span><span class="nv">2.0</span><span class="p p-Indicator">,</span><span class="w">           </span><span class="nv">325</span><span class="p p-Indicator">,</span><span class="w">    </span><span class="nv">0.2</span><span class="p p-Indicator">,</span><span class="w">  </span><span class="nv">0</span><span class="w">     </span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1">## case-1</span>
+
+<span class="nt">objective_function</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;mass_fowt&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;tension&#39;</span><span class="p p-Indicator">]</span>
+<span class="nt">objective_weights</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.85</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.15</span><span class="p p-Indicator">]</span>
+<span class="nt">objective_reference</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">10e4</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">10e6</span><span class="p p-Indicator">]</span>
+<span class="nt">p_values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">1.0</span><span class="p p-Indicator">]</span>
+
+<span class="nt">platform</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">optimize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True or False</span>
+<span class="w">    </span><span class="nt">update_stability</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True or False</span>
+<span class="w">    </span><span class="nt">design_variables</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">dv_1</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float</span>
+<span class="w">        </span><span class="nt">dv_2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+
+<span class="w">    </span><span class="nt">secondary_design_variables</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None or similar to design variables</span>
+
+<span class="w">    </span><span class="nt">bounds_design_variables</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">dv_1</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Float</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">Float</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">dv_2</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Float</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">Float</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+
+<span class="w">    </span><span class="nt">outputs</span><span class="p">:</span><span class="w"> </span><span class="c1"># Can be any variable from within RAFT or any user defined function</span>
+<span class="w">        </span><span class="nt">case_metrics</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;surge_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;sway_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;heave_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;roll_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;pitch_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;yaw_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;Mbase_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;AxRNA_max&#39;</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">fowtList</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;sway&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;heave&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;roll&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;pitch&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;yaw&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;mass_fowt&#39;</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+
+<span class="w">    </span><span class="nt">inequality_constraints</span><span class="p">:</span><span class="w"> </span><span class="c1"># Any constraint must be listed in the outputs</span>
+<span class="w">        </span><span class="nt">pitch_max</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Float</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">Float</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+
+<span class="nt">mooring</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">optimize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True or False</span>
+<span class="w">    </span><span class="nt">update_stability</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True or False</span>
+<span class="w">    </span><span class="nt">design_variables</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># None &#39;OR&#39;</span>
+<span class="w">        </span><span class="nt">dv_3</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float</span>
+<span class="w">        </span><span class="nt">dv_4</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+
+<span class="w">    </span><span class="nt">secondary_design_variables</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># None &#39;OR&#39;</span>
+<span class="w">        </span><span class="nt">dv_5</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float</span>
+<span class="w">        </span><span class="nt">dv_6</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+
+<span class="w">    </span><span class="nt">bounds_design_variables</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># None &#39;OR&#39;</span>
+<span class="w">        </span><span class="nt">dv_3</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Float</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">Float</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">dv_4</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Float</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">Float</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+
+<span class="w">    </span><span class="nt">inequality_constraints</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># None &#39;OR&#39;</span>
+<span class="w">        </span><span class="nt">dv_3</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Float</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">Float</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">dv_4</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Float</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">Float</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+
+<span class="w">    </span><span class="nt">bounds_secondary_design_variables</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># None &#39;OR&#39;</span>
+<span class="w">        </span><span class="nt">dv_5</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float</span>
+<span class="w">        </span><span class="nt">dv_6</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+
+<span class="w">    </span><span class="nt">secondary_inequality_constraints</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># None &#39;OR&#39;</span>
+<span class="w">        </span><span class="nt">dv_5</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Float</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">Float</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">dv_6</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Float</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">Float</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+
+<span class="w">    </span><span class="nt">secondary_outputs</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># None &#39;OR&#39;</span>
+<span class="w">    </span><span class="c1"># Example of user defined function is given here.</span>
+<span class="w">    </span><span class="c1"># Note that for the user defined functions the</span>
+<span class="w">    </span><span class="c1"># strings in the list should have the same value as the key</span>
+<span class="w">        </span><span class="nt">intersect_dist_2 </span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;intersect_dist_2&#39;</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">intersect_dist_4 </span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;intersect_dist_4&#39;</span><span class="p p-Indicator">]</span>
+
+<span class="w">    </span><span class="nt">outputs</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">fowtList</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;tension&#39;</span><span class="p p-Indicator">]</span>
+
+<span class="nt">driver_information</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">tolerance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float</span><span class="w"> </span><span class="c1">#Value less then 0.01 is recommended</span>
+<span class="w">    </span><span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Algorithm Name</span>
+<span class="w">    </span><span class="c1"># Currently SLSQP, SLSQP_PYOPT, ALPSO, Diff_GA and COBYLA are supported</span>
+<span class="w">    </span><span class="c1"># We recommend using SLSQP first, if it does not work try using SLSQP_PYOPT</span>
+<span class="w">    </span><span class="nt">recorder_file_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name_of_recorder.sql</span>
+</pre></div>
+</div>
+<p>Now, let’s break this script down and understand each section</p>
+<section id="objective-functions">
+<h3>Objective Functions<a class="headerlink" href="#objective-functions" title="Permalink to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">objective_function</span></code> is always minimized. If you want to
+maximize the objective function, add a user defined function
+inside <code class="docutils literal notranslate"><span class="pre">calcuvate.py</span></code>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">cases</span><span class="p">:</span><span class="w"> </span><span class="c1"># Only one environmental state</span>
+<span class="w">    </span><span class="nt">keys </span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">wind_speed</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wind_heading</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">turbulence</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">turbine_status</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">yaw_misalign</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wave_spectrum</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wave_period</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wave_height</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wave_heading</span><span class="w"> </span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">current_speed</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">current_heading</span><span class="w"> </span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">data </span><span class="p">:</span><span class="w">  </span><span class="c1">#   m/s        deg    % or e.g. 2B_NTM    string            deg         string          (s)         (m)         (deg)</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w">  </span><span class="p p-Indicator">[</span><span class="w">   </span><span class="nv">10.5</span><span class="p p-Indicator">,</span><span class="w">         </span><span class="nv">350</span><span class="p p-Indicator">,</span><span class="w">            </span><span class="nv">0.01</span><span class="p p-Indicator">,</span><span class="w">       </span><span class="nv">operating</span><span class="p p-Indicator">,</span><span class="w">          </span><span class="nv">0</span><span class="p p-Indicator">,</span><span class="w">        </span><span class="nv">JONSWAP</span><span class="p p-Indicator">,</span><span class="w">         </span><span class="nv">8.1</span><span class="p p-Indicator">,</span><span class="w">        </span><span class="nv">2.0</span><span class="p p-Indicator">,</span><span class="w">           </span><span class="nv">325</span><span class="p p-Indicator">,</span><span class="w">    </span><span class="nv">0.2</span><span class="p p-Indicator">,</span><span class="w">  </span><span class="nv">0</span><span class="w">     </span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1">## case-1</span>
+
+<span class="nt">objective_function</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;mass_fowt&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;tension&#39;</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># First let&#39;s set the objective function (s) for the problem</span>
+<span class="nt">objective_weights</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.85</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.15</span><span class="p p-Indicator">]</span><span class="w">               </span><span class="c1"># Objective weights in a multiobjective function</span>
+<span class="nt">objective_reference</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">10e4</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">10e6</span><span class="p p-Indicator">]</span><span class="w">             </span><span class="c1"># Refernce value that non-dimensionalizes objective function</span>
+<span class="c1"># Both objective_weights and objective_reference should match the size of objective_function</span>
+</pre></div>
+</div>
+<p>For now let’s consider only one environmental state. The objective function in each of the environmental states is a weighted sum that considers the normalized FOWT mass and the normalized maximum tension in the mooring lines. This is mathematically represented in the equations below:</p>
+<div class="math notranslate nohighlight">
+\[f_i = \alpha_i \tilde{m} + \beta_i \tilde{T} \quad \text{where} \quad \alpha_i + \beta_i = 1\]</div>
+<div class="math notranslate nohighlight">
+\[F = \sum_i w_i f_i\]</div>
+<p>Each of the <span class="math notranslate nohighlight">\(f_i\)</span> s represents the objective function for each of the environmental states. <span class="math notranslate nohighlight">\(\tilde{m}\)</span> and <span class="math notranslate nohighlight">\(\tilde{T}\)</span> are the normalized FOWT mass and mooring line tension, respectively. <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span> are their corresponding weights.</p>
+<p>We use mass as a proxy for the levelized cost of energy (LCOE), since a lower mass implies a lower cost of construction. The primary goal is to reduce the overall FOWT mass; therefore, <span class="math notranslate nohighlight">\(\alpha\)</span> is assigned a value of 0.85, prioritizing it three times more than the tension in the mooring lines.</p>
+</section>
+<section id="platform">
+<h3>Platform<a class="headerlink" href="#platform" title="Permalink to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">platform</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">optimize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True or False</span>
+<span class="w">    </span><span class="nt">update_stability</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True or False</span>
+<span class="w">    </span><span class="nt">design_variables</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># None &#39;OR&#39;</span>
+<span class="w">        </span><span class="nt">dv_1</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float</span>
+<span class="w">        </span><span class="nt">dv_2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+
+<span class="w">    </span><span class="nt">secondary_design_variables</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None or similar to design variables</span>
+
+<span class="w">    </span><span class="nt">bounds_design_variables</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># None &#39;OR&#39;</span>
+<span class="w">        </span><span class="nt">dv_1</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Float</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">Float</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">dv_2</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Float</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">Float</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+
+<span class="w">    </span><span class="nt">outputs</span><span class="p">:</span><span class="w"> </span><span class="c1"># Can be any variable from within RAFT or any user defined function</span>
+<span class="w">        </span><span class="nt">case_metrics</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;surge_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;sway_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;heave_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;roll_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;pitch_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;yaw_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;Mbase_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;AxRNA_max&#39;</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">fowtList</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;sway&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;heave&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;roll&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;pitch&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;yaw&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;mass_fowt&#39;</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+
+<span class="w">    </span><span class="nt">inequality_constraints</span><span class="p">:</span><span class="w"> </span><span class="c1"># Any constraint must be listed in the outputs</span>
+<span class="w">        </span><span class="nt">pitch_max</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Float</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">Float</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+</pre></div>
+</div>
+<p>Setting optimize to True implies that the user intends to
+optimize the platform geometry. Consequently, the user is
+expected to provide design variables. Failing to do so will
+result in an error.</p>
+<p><strong>Note:</strong> The user can choose to provide design variables even
+if optimize is set to False. This situation may arise when
+the user wants to use a baseline design that is geometrically
+different from the design specified in the design_file.yaml file.</p>
+<p><strong>Note:</strong> Any constraint or objective function must be first “listed” in the outputs.
+If <code class="docutils literal notranslate"><span class="pre">mass_fowt</span></code> needs to be added as an objective function then mention it in <code class="docutils literal notranslate"><span class="pre">outputs[fowt_list]</span></code>.</p>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">update_stability</span></code> to true informs the optimizer to define a optimization problem that solves for the
+converged <code class="docutils literal notranslate"><span class="pre">secondary_design_variables</span></code> to ensure stability under unloaded condition of the FOWT.
+The objective function of this optimizer is predefined as:</p>
+<div class="math notranslate nohighlight">
+\[\text{Unloaded Stability} = \frac{heave}{0.5}^2 + \frac{surge}{0.5}^2 + \frac{sway}{0.5}^2 + \frac{pitch}{0.5}^2 + \frac{yaw}{0.5}^2 + \frac{roll}{0.5}^2\]</div>
+<p>In addition to unloaded stability no other objective function can be added to the optimizer. However, additional constraints can be
+included in the optimizer using the key <code class="docutils literal notranslate"><span class="pre">secondary_inequality_constraints</span></code>,
+as demonstrated in the mooring section of the user_input.yaml file. The stability optimization take place after
+the geometric optimization for lowering the mass and tension.</p>
+</section>
+<section id="mooring">
+<h3>Mooring<a class="headerlink" href="#mooring" title="Permalink to this heading"></a></h3>
+<p>The mooring section of the script is very similar to the
+platform section.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">mooring</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">optimize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True or False</span>
+<span class="w">    </span><span class="nt">update_stability</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True or False</span>
+<span class="w">    </span><span class="nt">design_variables</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># None &#39;OR&#39;</span>
+<span class="w">        </span><span class="nt">dv_3</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float</span>
+<span class="w">        </span><span class="nt">dv_4</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+
+<span class="w">    </span><span class="nt">secondary_design_variables</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># None &#39;OR&#39;</span>
+<span class="w">        </span><span class="nt">dv_5</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float</span>
+<span class="w">        </span><span class="nt">dv_6</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+
+<span class="w">    </span><span class="nt">bounds_design_variables</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># None &#39;OR&#39;</span>
+<span class="w">        </span><span class="nt">dv_3</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Float</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">Float</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">dv_4</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Float</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">Float</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+
+<span class="w">    </span><span class="nt">inequality_constraints</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># None &#39;OR&#39;</span>
+<span class="w">        </span><span class="nt">dv_3</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Float</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">Float</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">dv_4</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Float</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">Float</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+
+<span class="w">    </span><span class="nt">bounds_secondary_design_variables</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># None &#39;OR&#39;</span>
+<span class="w">        </span><span class="nt">dv_5</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float</span>
+<span class="w">        </span><span class="nt">dv_6</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+
+<span class="w">    </span><span class="nt">secondary_inequality_constraints</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># None &#39;OR&#39;</span>
+<span class="w">        </span><span class="nt">dv_5</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Float</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">Float</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">dv_6</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Float</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">Float</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+
+<span class="w">    </span><span class="nt">secondary_outputs</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># None &#39;OR&#39;</span>
+<span class="w">    </span><span class="c1"># Example of user defined function is given here.</span>
+<span class="w">    </span><span class="c1"># Note that for the user defined functions the</span>
+<span class="w">    </span><span class="c1"># strings in the list should have the same string as the key</span>
+<span class="w">        </span><span class="nt">intersect_dist_2 </span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;intersect_dist_2&#39;</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">intersect_dist_4 </span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;intersect_dist_4&#39;</span><span class="p p-Indicator">]</span>
+
+<span class="w">    </span><span class="nt">outputs</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">fowtList</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;tension&#39;</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p><strong>Note:</strong> Notice that the output of the keys <code class="docutils literal notranslate"><span class="pre">intersect_dist_2</span></code> and <code class="docutils literal notranslate"><span class="pre">intersect_dist_4</span></code>
+are defined as strings with the identifier of the key itself, which indicates that they are not
+direct outputs from RAFT. Instead, these are custom user defined (defined within
+<code class="docutils literal notranslate"><span class="pre">calcuvate.py</span></code> details of which will be discussed in the next subsection)
+constraints used to inform the optimizer that they are not available within RAFT.</p>
+</section>
+<section id="optimization-settings">
+<h3>Optimization Settings<a class="headerlink" href="#optimization-settings" title="Permalink to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">driver_information</span></code> section specifies the parameters and settings for the optimization driver used in RAFT-opt. This section includes the tolerance for convergence, the optimization algorithm to be used, and the name of the file where the results will be recorded.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">driver_information</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">tolerance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float</span><span class="w"> </span><span class="c1"># Value less than 0.01 is recommended</span>
+<span class="w">    </span><span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Algorithm Name</span>
+<span class="w">    </span><span class="c1"># Currently SLSQP, SLSQP_PYOPT, ALPSO, Diff_GA and COBYLA are supported</span>
+<span class="w">    </span><span class="c1"># We recommend using SLSQP first, if it does not work try using SLSQP_PYOPT</span>
+<span class="w">    </span><span class="nt">recorder_file_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name_of_recorder.sql</span>
+</pre></div>
+</div>
+<p>The parameters are</p>
+<dl class="simple">
+<dt><strong>tolerance</strong>:</dt><dd><ul class="simple">
+<li><p><strong>Type</strong>: <code class="docutils literal notranslate"><span class="pre">Float</span></code></p></li>
+<li><p><strong>Description</strong>: This parameter defines the convergence tolerance for the optimization algorithm. A smaller value indicates a stricter convergence criterion.</p></li>
+<li><p><strong>Recommendation</strong>: A value less than <code class="docutils literal notranslate"><span class="pre">0.01</span></code> is recommended for achieving precise optimization results.</p></li>
+</ul>
+</dd>
+<dt><strong>algorithm</strong>:</dt><dd><ul class="simple">
+<li><p><strong>Type</strong>: <code class="docutils literal notranslate"><span class="pre">String</span></code></p></li>
+<li><p><strong>Description</strong>: This parameter specifies the optimization algorithm to be used. Several algorithms are supported, each with its strengths and weaknesses. The choice of algorithm can affect the speed and success of the optimization.</p></li>
+<li><p><strong>Supported Algorithms</strong>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">SLSQP</span></code>: Sequential Least Squares Quadratic Programming</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SLSQP_PYOPT</span></code>: SLSQP implementation from PYOPT</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ALPSO</span></code>: Augmented Lagrangian Particle Swarm Optimization</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Diff_GA</span></code>: Differential Evolution Genetic Algorithm</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COBYLA</span></code>: Constrained Optimization BY Linear Approximations</p></li>
+</ul>
+</li>
+<li><p><strong>Recommendation</strong>: It is recommended to use <code class="docutils literal notranslate"><span class="pre">SLSQP</span></code> first. If it does not work, try using <code class="docutils literal notranslate"><span class="pre">SLSQP_PYOPT</span></code>.</p></li>
+</ul>
+</dd>
+<dt><strong>recorder_file_name</strong>:</dt><dd><ul class="simple">
+<li><p><strong>Type</strong>: <code class="docutils literal notranslate"><span class="pre">String</span></code></p></li>
+<li><p><strong>Description</strong>: This parameter defines the name of the file where the results of the optimization process, including the values of all design variables, objective functions, and constraints, will be recorded.</p></li>
+<li><p><strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">recorder_file_name:</span> <span class="pre">optimization_results.sql</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</section>
+<section id="calcuvate-py">
+<h2>Calcuvate.py<a class="headerlink" href="#calcuvate-py" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">calcuvate.py</span></code> consists of the following functions</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">calcuvate()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_updateColumns()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_updateMoorings()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">user_defined_functions()</span></code></p></li>
+</ul>
+<p>The function <code class="docutils literal notranslate"><span class="pre">_updateColumns()</span></code> defines the mathematical relation between the platform <code class="docutils literal notranslate"><span class="pre">design_variables</span></code>,
+<code class="docutils literal notranslate"><span class="pre">secondary_design_variables</span></code> and the platform geometry. Similarly, the function <code class="docutils literal notranslate"><span class="pre">_updateMoorings()</span></code>
+defines the mathematical relation between the mooring <code class="docutils literal notranslate"><span class="pre">design_variables</span></code>, <code class="docutils literal notranslate"><span class="pre">secondary_design_variables</span></code> and the
+mooring line configuration. Calcuvate function returns the next iterative design based on all the design variables
+obtained from the optimizer in the current iteration.</p>
+<p>Let’s illustrate the use of the input file and calcuvate file using some examples.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="starting.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="example-1.html" class="btn btn-neutral float-right" title="Example-1" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Vishnu Sankar Manivasakan, Stein Housner.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+platform:
+    optimize: True
+    update_stability: True
+    design_variables: 
+        # lower_column_d: 24
+        upper_column_d: 12
+    
+    secondary_design_variables:
+        lower_column_l_fill: 0.84
+        upper_column_l_fill: 0.2988
+
+    bounds_design_variables:
+        # lower_column_d: [20., 28.]
+        upper_column_d: [5., 20.]
+
+    bounds_secondary_design_variables:
+        lower_column_l_fill: [0.0, 1.0]
+        upper_column_l_fill: [0.0, 1.0]
+
+    outputs:
+        case_metrics: ['surge_max', 'sway_max', 'heave_max', 'roll_max', 'pitch_max', 'yaw_max', 'Mbase_max']
+        fowtList: ['heave', 'pitch', 'mass_fowt']
+        eigen_frequencies: {'f_heave': 2, 'f_pitch': 3}
+
+    secondary_outputs: None
+
+    inequality_constraints: 
+        f_heave: [19.0, None]
+        f_pitch: [30.0, None]
+        pitch_max: [-10.0, 10.0]
+        # heave: [-0.1, 0.1]
+        # Mbase_max: [None, 14571312690] ## There are other constraints that can be incorporated in the framework
+        # pitch: [0, 0.0035]
+        # mass_fowt: [None, 6500] ## Please note that mass_fowt cannot be both a constraint and an objective function
+    
+    secondary_inequality_constraints: None
+    secondary_outputs: None
+
+mooring:
+    optimize: False
+    update_stability: False
+    design_variables: None
+    secondary_design_variables: None
+    outputs: None
+    inequality_constraints: None
+    secondary_inequality_constraints: None
+    secondary_outputs: None
+
+objective_function: ['mass_fowt']
+
+driver_information:
+    tolerance: 0.01
+    algorithm: SLSQP # Currently SLSQP, SLSQP_PYOPT, ALPSO, Diff_GA and COBYLA are supported in the framework
+    recorder_file_name: dummy.sql # Feel free to change the name of the file where values of all the design variables, objective functions and constraints are stored

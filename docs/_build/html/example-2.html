@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Example-2 &mdash; RAFT-OPT 2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="raft-opt-modular" href="modules.html" />
+    <link rel="prev" title="Example-1" href="example-1.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            RAFT-OPT
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="starting.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example-1.html">Example-1</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Example-2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#oc3-hywind-spar-optimization">OC3-Hywind Spar Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#user-input-file">User Input File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#calcuvate">Calcuvate</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#convergence-plots">Convergence Plots</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">raft-opt-modular</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RAFT-OPT</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Example-2</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/example-2.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="example-2">
+<h1>Example-2<a class="headerlink" href="#example-2" title="Permalink to this heading"></a></h1>
+<section id="oc3-hywind-spar-optimization">
+<h2>OC3-Hywind Spar Optimization<a class="headerlink" href="#oc3-hywind-spar-optimization" title="Permalink to this heading"></a></h2>
+<p>In this example, let’s take the same design with which we worked with in the previous example.
+But now let’s focus on just decreasing the tension
+without decreasing the mass. So let’s leave the diameter and the height out of the picture.
+We may not be very sure as to which mooring line design variables are going to impact tension in the cables.
+So for now, let us go ahead and define as many design variables as we can. And let’s hope that the optimizer figures out which
+ones to tweak.</p>
+<p>Open a local folder in your machine, and copy the
+<code class="docutils literal notranslate"><span class="pre">design_file.yaml</span></code> from the <code class="docutils literal notranslate"><span class="pre">example&gt;oc3_mooring_opt</span></code>
+folder present in RAFT-Opt repository. This example consists of
+the 5MW with OC3-Hywind spar design. The setup file for this problem is shown below:</p>
+<section id="user-input-file">
+<h3>User Input File<a class="headerlink" href="#user-input-file" title="Permalink to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">platform</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">optimize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="w">    </span><span class="nt">update_stability</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
+
+<span class="w">    </span><span class="nt">design_variables</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">center_spar_d</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9.4</span>
+<span class="w">        </span><span class="nt">center_spar_h</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">130</span>
+
+<span class="w">    </span><span class="nt">secondary_design_variables</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">l_fill_0</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">29</span>
+<span class="w">        </span><span class="nt">l_fill_1</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">29</span>
+
+<span class="w">    </span><span class="nt">bounds_design_variables</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">center_spar_d</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">8.</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">15.</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">center_spar_h</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">85</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">150</span><span class="p p-Indicator">]</span>
+
+<span class="w">    </span><span class="nt">bounds_secondary_design_variables</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">l_fill_0</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">29.0</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">l_fill_1</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">29.0</span><span class="p p-Indicator">]</span>
+
+<span class="w">    </span><span class="nt">outputs</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">case_metrics</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;surge_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;sway_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;heave_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;roll_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;pitch_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;yaw_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;Mbase_max&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;AxRNA_max&#39;</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">fowtList</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;sway&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;heave&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;roll&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;pitch&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;yaw&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;mass_fowt&#39;</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">eigenvalue</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;eigenvalue_surge&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;eigenvalue_heave&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;eigenvalue_pitch&#39;</span><span class="p p-Indicator">]</span>
+
+<span class="w">    </span><span class="nt">inequality_constraints</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">pitch_max</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">-10.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">10.0</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">surge_max</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">None</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">30</span><span class="p p-Indicator">]</span>
+
+<span class="nt">mooring</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">optimize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
+<span class="w">    </span><span class="nt">update_stability</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+
+<span class="w">    </span><span class="nt">design_variables</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">clump_mass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000</span>
+<span class="w">        </span><span class="nt">z_fairlead</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-70.0</span><span class="w">          </span><span class="c1"># fairlead height</span>
+<span class="w">        </span><span class="nt">r_anchor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">853.87</span><span class="w">        </span><span class="c1"># anchor radius</span>
+<span class="w">        </span><span class="nt">l_ballast</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">254.2</span><span class="w">             </span><span class="c1"># cable length</span>
+<span class="w">        </span><span class="nt">l_anchor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">673.87</span><span class="w">             </span><span class="c1"># cable length</span>
+
+<span class="w">    </span><span class="nt">bounds_design_variables</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">clump_mass</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">5000</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">15000</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">z_fairlead</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">-90</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">-50</span><span class="p p-Indicator">]</span><span class="w">          </span><span class="c1"># fairlead height</span>
+<span class="w">        </span><span class="nt">r_anchor</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">550</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">920</span><span class="p p-Indicator">]</span><span class="w">        </span><span class="c1"># anchor radius</span>
+<span class="w">        </span><span class="nt">l_ballast</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">50</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">910</span><span class="p p-Indicator">]</span><span class="w">             </span><span class="c1"># cable length</span>
+<span class="w">        </span><span class="nt">l_anchor</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">200</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">910</span><span class="p p-Indicator">]</span><span class="w">             </span><span class="c1"># cable length</span>
+
+<span class="w">    </span><span class="nt">secondary_design_variables</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
+
+<span class="w">    </span><span class="nt">inequality_constraints</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">l_cable</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">570.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">930.0</span><span class="p p-Indicator">]</span>
+
+<span class="w">    </span><span class="nt">outputs</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">fowtList</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;tension&#39;</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">l_cable</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;l_cable&#39;</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="c1"># unstretched_length: [&#39;LBot_0&#39;, &#39;LBot_3&#39;, &#39;LBot_6&#39;]</span>
+
+<span class="nt">objective_function</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;tension&#39;</span><span class="p p-Indicator">]</span>
+<span class="nt">objective_weights</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">1.0</span><span class="p p-Indicator">]</span>
+<span class="nt">objective_reference</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">500000</span><span class="p p-Indicator">]</span>
+<span class="nt">objective_function_alias</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="s">&#39;tension&#39;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&#39;weighted_raft_opt.weighted_multi_obj&#39;</span><span class="p p-Indicator">}</span>
+
+<span class="nt">driver_information</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">tolerance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.01</span>
+<span class="w">    </span><span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SLSQP</span><span class="w"> </span><span class="c1"># Currently SLSQP, ALPSO, Diff_GA and COBYLA are supported in the framework</span>
+<span class="w">    </span><span class="nt">recorder_file_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dummy_stability.sql</span><span class="w"> </span><span class="c1"># Feel free to change the name of the file where values of all the design variables, objective functions and constraints are stored</span>
+
+<span class="nt">cases</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">keys </span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">wind_speed</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wind_heading</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">turbulence</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">turbine_status</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">yaw_misalign</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wave_spectrum</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wave_period</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wave_height</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wave_heading</span><span class="w"> </span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">current_speed</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">current_heading</span><span class="w"> </span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">data </span><span class="p">:</span><span class="w">  </span><span class="c1">#   m/s        deg    % or e.g. 2B_NTM    string            deg         string          (s)         (m)         (deg)</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w">  </span><span class="p p-Indicator">[</span><span class="w">   </span><span class="nv">5.75</span><span class="p p-Indicator">,</span><span class="w">         </span><span class="nv">0</span><span class="p p-Indicator">,</span><span class="w">            </span><span class="nv">0.01</span><span class="p p-Indicator">,</span><span class="w">       </span><span class="nv">operating</span><span class="p p-Indicator">,</span><span class="w">          </span><span class="nv">0</span><span class="p p-Indicator">,</span><span class="w">        </span><span class="nv">JONSWAP</span><span class="p p-Indicator">,</span><span class="w">         </span><span class="nv">8.1</span><span class="p p-Indicator">,</span><span class="w">        </span><span class="nv">2</span><span class="p p-Indicator">,</span><span class="w">           </span><span class="nv">150</span><span class="p p-Indicator">,</span><span class="w">    </span><span class="nv">0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0</span><span class="w">     </span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+</section>
+<section id="calcuvate">
+<h3>Calcuvate<a class="headerlink" href="#calcuvate" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_updateMoorings</span><span class="p">(</span><span class="n">x_mooring</span><span class="p">,</span> <span class="n">center_spar</span><span class="p">,</span> <span class="n">ms</span><span class="p">):</span>
+    <span class="n">water_depth</span> <span class="o">=</span> <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;water_depth&#39;</span><span class="p">]</span>
+    <span class="n">z_fair_fraction</span> <span class="o">=</span> <span class="mi">70</span><span class="o">/</span><span class="mi">120</span>
+    <span class="n">clump_mass</span> <span class="o">=</span> <span class="n">x_mooring</span><span class="p">[</span><span class="s1">&#39;clump_mass&#39;</span><span class="p">]</span>
+    <span class="n">r_anchor</span> <span class="o">=</span> <span class="n">x_mooring</span><span class="p">[</span><span class="s1">&#39;r_anchor&#39;</span><span class="p">]</span>
+    <span class="n">z_fairlead</span> <span class="o">=</span> <span class="n">x_mooring</span><span class="p">[</span><span class="s1">&#39;z_fairlead&#39;</span><span class="p">]</span>
+    <span class="n">l_ballast</span> <span class="o">=</span> <span class="n">x_mooring</span><span class="p">[</span><span class="s1">&#39;l_ballast&#39;</span><span class="p">]</span> <span class="c1">## cable joining fairlead position to ballast</span>
+    <span class="n">l_anchor</span> <span class="o">=</span> <span class="n">x_mooring</span><span class="p">[</span><span class="s1">&#39;l_anchor&#39;</span><span class="p">]</span> <span class="c1">## cable joining fairlead position to ballast</span>
+    <span class="n">spar_d</span> <span class="o">=</span> <span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">xFair</span> <span class="o">=</span> <span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">0.5</span>
+    <span class="n">zFair</span> <span class="o">=</span> <span class="n">z_fair_fraction</span><span class="o">*</span><span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">lines</span> <span class="ow">in</span> <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">lines</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;line1_vessel&#39;</span><span class="p">:</span>
+            <span class="n">lines</span><span class="p">[</span><span class="s1">&#39;location&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">xFair</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">zFair</span><span class="p">]</span>
+
+        <span class="k">elif</span> <span class="n">lines</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;line2_vessel&#39;</span><span class="p">:</span>
+            <span class="n">lines</span><span class="p">[</span><span class="s1">&#39;location&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">xFair</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">30</span><span class="p">)),</span> <span class="n">xFair</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">30</span><span class="p">)),</span> <span class="n">zFair</span><span class="p">]</span>
+
+        <span class="k">elif</span> <span class="n">lines</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;line3_vessel&#39;</span><span class="p">:</span>
+            <span class="n">lines</span><span class="p">[</span><span class="s1">&#39;location&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">xFair</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">30</span><span class="p">)),</span> <span class="o">-</span><span class="n">xFair</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">30</span><span class="p">)),</span> <span class="n">zFair</span><span class="p">]</span>
+
+    <span class="c1">### line-i_anchor</span>
+    <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">r_anchor</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="n">water_depth</span><span class="p">]</span>
+    <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">r_anchor</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">),</span> <span class="n">r_anchor</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">),</span> <span class="o">-</span><span class="n">water_depth</span><span class="p">]</span>
+    <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">r_anchor</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">),</span> <span class="o">-</span><span class="n">r_anchor</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">),</span> <span class="o">-</span><span class="n">water_depth</span><span class="p">]</span>
+
+    <span class="c1">### line-i_vessel_right</span>
+    <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="mi">3</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="n">spar_d</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="n">z_fairlead</span><span class="p">]</span>
+    <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="mi">4</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">spar_d</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">spar_d</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="p">,</span> <span class="o">-</span><span class="n">z_fairlead</span><span class="p">]</span>
+    <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="mi">5</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">spar_d</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">spar_d</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="p">,</span> <span class="o">-</span><span class="n">z_fairlead</span><span class="p">]</span>
+
+    <span class="c1">### line-i_connection</span>
+    <span class="n">z_ballast</span> <span class="o">=</span> <span class="p">((</span><span class="n">l_ballast</span><span class="o">/</span><span class="n">l_anchor</span><span class="p">)</span><span class="o">*</span><span class="n">water_depth</span> <span class="o">+</span> <span class="n">z_fairlead</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">l_ballast</span><span class="o">/</span><span class="n">l_anchor</span><span class="p">)</span>
+    <span class="n">r_ballast</span> <span class="o">=</span> <span class="p">(</span><span class="n">l_ballast</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="n">z_ballast</span><span class="o">-</span><span class="n">z_fairlead</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+
+    <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="mi">6</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">r_ballast</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="n">z_ballast</span><span class="p">]</span>
+    <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="mi">6</span><span class="p">][</span><span class="s1">&#39;mass&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">clump_mass</span>
+    <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="mi">7</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">r_ballast</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">),</span> <span class="n">r_ballast</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="p">,</span> <span class="o">-</span><span class="n">z_ballast</span><span class="p">]</span>
+    <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="mi">7</span><span class="p">][</span><span class="s1">&#39;mass&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">clump_mass</span>
+    <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="mi">8</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">r_ballast</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">),</span> <span class="o">-</span><span class="n">r_ballast</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="p">,</span> <span class="o">-</span><span class="n">z_ballast</span><span class="p">]</span>
+    <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="mi">8</span><span class="p">][</span><span class="s1">&#39;mass&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">clump_mass</span>
+
+    <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;lines&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">l_ballast</span> <span class="c1"># connecting anchor to connection</span>
+    <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;lines&#39;</span><span class="p">][</span><span class="mi">3</span><span class="p">][</span><span class="s1">&#39;length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">l_ballast</span> <span class="c1"># connecting anchor to connection</span>
+    <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;lines&#39;</span><span class="p">][</span><span class="mi">5</span><span class="p">][</span><span class="s1">&#39;length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">l_ballast</span> <span class="c1"># connecting anchor to connection</span>
+
+    <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;lines&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">l_anchor</span>
+    <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;lines&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">][</span><span class="s1">&#39;length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">l_anchor</span>
+    <span class="n">ms</span><span class="p">[</span><span class="s1">&#39;lines&#39;</span><span class="p">][</span><span class="mi">4</span><span class="p">][</span><span class="s1">&#39;length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">l_anchor</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">ms</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_updateColumns</span><span class="p">(</span><span class="n">center_spar</span><span class="p">,</span> <span class="n">x_platform</span><span class="p">):</span>
+    <span class="n">freeboard</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_platform</span><span class="p">[</span><span class="s1">&#39;center_spar_d&#39;</span><span class="p">]</span>
+    <span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_platform</span><span class="p">[</span><span class="s1">&#39;center_spar_d&#39;</span><span class="p">]</span>
+    <span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_platform</span><span class="p">[</span><span class="s1">&#39;center_spar_d&#39;</span><span class="p">]</span>
+    <span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_platform</span><span class="p">[</span><span class="s1">&#39;center_spar_d&#39;</span><span class="p">]</span>
+    <span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;rA&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">x_platform</span><span class="p">[</span><span class="s1">&#39;center_spar_h&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">freeboard</span>
+    <span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;stations&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">x_platform</span><span class="p">[</span><span class="s1">&#39;center_spar_h&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">freeboard</span>
+    <span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;stations&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;stations&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">30.</span>
+    <span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;stations&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;stations&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">30.</span>
+    <span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;l_fill&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_platform</span><span class="p">[</span><span class="s1">&#39;l_fill_0&#39;</span><span class="p">]</span>
+    <span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;l_fill&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_platform</span><span class="p">[</span><span class="s1">&#39;l_fill_1&#39;</span><span class="p">]</span>
+
+    <span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;cap_stations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">center_spar</span><span class="p">[</span><span class="s1">&#39;stations&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">center_spar</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">calcuvate</span><span class="p">(</span><span class="n">design</span><span class="p">,</span> <span class="n">x_platform</span><span class="p">,</span> <span class="n">x_mooring</span><span class="p">):</span>
+    <span class="n">center_spar</span> <span class="o">=</span> <span class="n">design</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">][</span><span class="s1">&#39;members&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">ms</span> <span class="o">=</span> <span class="n">design</span><span class="p">[</span><span class="s1">&#39;mooring&#39;</span><span class="p">]</span>
+
+    <span class="n">center_spar</span> <span class="o">=</span> <span class="n">_updateColumns</span><span class="p">(</span><span class="n">center_spar</span><span class="p">,</span> <span class="n">x_platform</span><span class="p">)</span>
+    <span class="n">ms</span> <span class="o">=</span> <span class="n">_updateMoorings</span><span class="p">(</span><span class="n">x_mooring</span><span class="p">,</span> <span class="n">center_spar</span><span class="p">,</span> <span class="n">ms</span><span class="p">)</span>
+
+    <span class="n">design</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">][</span><span class="s1">&#39;members&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">center_spar</span>
+    <span class="n">design</span><span class="p">[</span><span class="s1">&#39;mooring&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ms</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">design</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The user defined function for <code class="docutils literal notranslate"><span class="pre">l_cable</span></code> is given below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">l_cable</span><span class="p">(</span><span class="n">design</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x_platform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x_mooring</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">l_cable</span> <span class="o">=</span> <span class="n">x_mooring</span><span class="p">[</span><span class="s1">&#39;l_ballast&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">x_mooring</span><span class="p">[</span><span class="s1">&#39;l_anchor&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">l_cable</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Place the <code class="docutils literal notranslate"><span class="pre">calculate.py</span></code> file in the same directory.
+And create the optimization setup as shown below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">raft_opt</span> <span class="kn">import</span> <span class="n">raft_opt</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">design_file</span> <span class="o">=</span> <span class="s1">&#39;oc3_design.yaml&#39;</span>
+<span class="n">user_input_file</span> <span class="o">=</span> <span class="s1">&#39;user_input.yaml&#39;</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">design_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">design</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">user_input_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">user_input</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">clean_numpy</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">clean_numpy</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">clean_numpy</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">obj</span>
+
+
+<span class="k">def</span> <span class="nf">single_point_opt</span><span class="p">():</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;s0.txt&quot;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">design_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">design</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">user_input_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">user_input</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
+
+    <span class="n">design</span><span class="p">[</span><span class="s1">&#39;cases&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">user_input</span><span class="p">[</span><span class="s1">&#39;cases&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="n">user_input</span><span class="p">[</span><span class="s1">&#39;driver_information&#39;</span><span class="p">][</span><span class="s1">&#39;recorder_file_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;s0.sql&#39;</span>
+    <span class="n">current_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+    <span class="n">calcuvate_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_dir</span><span class="p">,</span> <span class="s1">&#39;calcuvate.py&#39;</span><span class="p">)</span>
+    <span class="n">optimized_design</span><span class="p">,</span> <span class="n">user_input</span> <span class="o">=</span> <span class="n">raft_opt</span><span class="o">.</span><span class="n">run_opt</span><span class="p">(</span><span class="n">design</span><span class="p">,</span> <span class="n">user_input</span><span class="p">,</span> <span class="n">calcuvate_path</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+    <span class="n">optimized_design</span><span class="p">,</span> <span class="n">user_input</span> <span class="o">=</span> <span class="n">raft_opt</span><span class="o">.</span><span class="n">run_stability</span><span class="p">(</span><span class="n">optimized_design</span><span class="p">,</span> <span class="n">user_input</span><span class="p">,</span> <span class="n">calcuvate_path</span><span class="p">,</span> <span class="s1">&#39;s0_stability.txt&#39;</span><span class="p">)</span>
+
+    <span class="n">optimized_design</span> <span class="o">=</span> <span class="n">clean_numpy</span><span class="p">(</span><span class="n">optimized_design</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;optimized_design.yaml&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">optimized_design</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">default_flow_style</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">optimized_design</span><span class="p">,</span> <span class="n">user_input</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">optimized_design</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">single_point_opt</span><span class="p">()</span>
+    <span class="c1"># optimized_design, _ = multi_point_opt()</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="si">}</span><span class="s1"> seconds elapsed&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="convergence-plots">
+<h4>Convergence Plots<a class="headerlink" href="#convergence-plots" title="Permalink to this heading"></a></h4>
+<img alt="_images/tension.png" src="_images/tension.png" />
+<img alt="_images/pitch_max1.png" src="_images/pitch_max1.png" />
+<img alt="_images/surge_max.png" src="_images/surge_max.png" />
+<img alt="_images/r_anchor.png" src="_images/r_anchor.png" />
+<img alt="_images/z_fairlead.png" src="_images/z_fairlead.png" />
+<img alt="_images/l_anchor.png" src="_images/l_anchor.png" />
+<img alt="_images/l_ballast.png" src="_images/l_ballast.png" />
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="example-1.html" class="btn btn-neutral float-left" title="Example-1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="raft-opt-modular" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Vishnu Sankar Manivasakan, Stein Housner.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

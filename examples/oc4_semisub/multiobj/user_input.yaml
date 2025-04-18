@@ -1,0 +1,88 @@
+platform:
+    optimize: True
+    update_stability: False
+    design_variables: 
+        lower_column_d: 24
+        upper_column_d: 12
+    
+    secondary_design_variables:
+        lower_column_l_fill: 0.84
+        upper_column_l_fill: 0.2988
+
+    bounds_design_variables:
+        lower_column_d: [20., 28.]
+        upper_column_d: [5., 20.]
+
+    bounds_secondary_design_variables:
+        lower_column_l_fill: [0.0, 1.0]
+        upper_column_l_fill: [0.0, 1.0]
+
+    outputs:
+        case_metrics: ['surge_max', 'sway_max', 'heave_max', 'roll_max', 'pitch_max', 'yaw_max', 'Mbase_max']
+        fowtList: ['heave', 'pitch', 'mass_fowt']
+        eigen_frequencies: {'f_heave': 2, 'f_pitch': 3}
+
+    secondary_outputs: None
+
+    inequality_constraints: 
+        f_heave: [18.5, None]
+        f_pitch: [30.0, None]
+        pitch_max: [-10.0, 10.0]
+        surge_max: [-20.0, 20.0]
+        # heave: [-0.1, 0.1]
+        # Mbase_max: [None, 14571312690] ## There are other constraints that can be incorporated in the framework
+        # pitch: [0, 0.0035]
+        # mass_fowt: [None, 6500] ## Please note that mass_fowt cannot be both a constraint and an objective function
+    
+    secondary_inequality_constraints: None
+    secondary_outputs: None
+
+mooring:
+    optimize: True
+    update_stability: False
+    design_variables: 
+        line_length: 800
+        line_dia: 0.0766
+
+    bounds_design_variables:
+        line_length: [500.0, 1200.0]
+        line_dia: [0.002, 0.2]
+
+    secondary_design_variables: None
+    outputs: 
+        fowtList: ['tension']
+        MBL: ['MBL']
+
+    inequality_constraints: 
+        MBL: [2.0, None]
+        
+    secondary_inequality_constraints: None
+    secondary_outputs: None
+
+objective_function: ['mass_fowt', 'tension']
+objective_weights: [0.75, 0.25]
+objective_reference: [2750, 300000.0]
+
+desired_outputs: [
+    "run_raft_opt_0.mass_fowt",
+    # "run_raft_opt_0.tension",
+    # "run_raft_opt_1.mass_fowt",
+    # "run_raft_opt_1.tension",
+    # "run_raft_opt_2.mass_fowt",
+    # "run_raft_opt_2.tension",
+]
+
+driver_information:
+    tolerance: 0.01
+    algorithm: SLSQP # Currently SLSQP, SLSQP_PYOPT, ALPSO, Diff_GA and COBYLA are supported in the framework
+    recorder_file_name: dummy.sql # Feel free to change the name of the file where values of all the design variables, objective functions and constraints are stored
+
+p_values: [0.675, 0.25, 0.075]
+
+
+cases:
+    keys : [wind_speed, wind_heading, turbulence, turbine_status, yaw_misalign, wave_spectrum, wave_period, wave_height, wave_heading , current_speed, current_heading  ]
+    data :  #   m/s        deg    % or e.g. 2B_NTM    string            deg         string          (s)         (m)         (deg)
+        -  [   10.5,         350,            0.01,       operating,          0,        JONSWAP,         8.1,        2.0,           325,    0.2,  0     ] ## case-1
+        -  [   9.5,         335,            0.01,       operating,          0,        JONSWAP,         10.5,        2.1,           300,    0.22, 0     ] ## case-2
+        -  [   15.0,         325,            0.01,       operating,          0,        JONSWAP,         11.7,        3.2,           300,    0.4,  0     ] ## case-3
