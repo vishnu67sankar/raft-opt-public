@@ -7,4 +7,4 @@ Kindly install raft and its dependencies from https://github.com/WISDEM/RAFT bef
 
 **Optimization wrapper for RAFT**
 -   Free software: Apache Software License 2.0
--   Documentation: Kindly clone this repo locally, and open ``docs\_build\html\index.html`` in your web browser for installation steps, and examples to get started. 
+-   Sphinx Documentation: Kindly clone this repo locally, and open ``docs\_build\html\index.html`` in your web browser for installation steps, and examples to get started. 
