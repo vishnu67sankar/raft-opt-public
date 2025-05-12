@@ -932,6 +932,24 @@ def raft_weighted_opt(design, user_input, cases, p_values, calcuvate_path):
     return (opt_design, user_input)
 
 def run_opt(design, user_input, calcuvate_path, output):
+    """Runs a standard RAFT optimization for a single deterministic case.
+
+    Sets up and executes an OpenMDAO problem with one OWT instance.
+    The objective function is calculated using the WeightedObjectives component
+    based on user-defined weights and references.
+
+    Args:
+        design (dict): Design dictionary.
+        user_input (dict): User input dictionary specifying optimization settings.
+        calcuvate_path (str): Path to the 'calcuvate.py' file.
+        output_log_file (str): Path to the file where stdout/stderr will be redirected.
+
+    Returns:
+        tuple: A tuple containing:
+            - dict: The final optimized design dictionary.
+            - dict: The user_input dictionary with updated design variables.
+    """
+    
     current_directory = os.path.dirname(os.path.abspath(__file__))
     
     with open(output, "w") as output_file:

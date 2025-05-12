@@ -1,26 +1,28 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>raft_opt package &mdash; RAFT-OPT 2.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
   
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=60dbed4a"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="setup module" href="setup.html" />
+    <link rel="prev" title="raft-opt-modular" href="modules.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -42,13 +44,61 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="starting.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="example-1.html">Example-1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="example-2.html">Example-2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">raft-opt-modular</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example-3.html">Example-3</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">raft-opt-modular</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">raft_opt package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-raft_opt.adjustStability">raft_opt.adjustStability module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.adjustStability.AdjustBallast"><code class="docutils literal notranslate"><span class="pre">AdjustBallast</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.adjustStability.AdjustMooring"><code class="docutils literal notranslate"><span class="pre">AdjustMooring</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.adjustStability.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.adjustStability.main_ballast"><code class="docutils literal notranslate"><span class="pre">main_ballast()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.adjustStability.main_mooring"><code class="docutils literal notranslate"><span class="pre">main_mooring()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-raft_opt.calcuvate">raft_opt.calcuvate module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.calcuvate.calcuvate"><code class="docutils literal notranslate"><span class="pre">calcuvate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.calcuvate.intersect_dist_1"><code class="docutils literal notranslate"><span class="pre">intersect_dist_1()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.calcuvate.intersect_dist_2"><code class="docutils literal notranslate"><span class="pre">intersect_dist_2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.calcuvate.intersect_dist_3"><code class="docutils literal notranslate"><span class="pre">intersect_dist_3()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.calcuvate.intersect_dist_4"><code class="docutils literal notranslate"><span class="pre">intersect_dist_4()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.calcuvate.power_mass_ratio"><code class="docutils literal notranslate"><span class="pre">power_mass_ratio()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.calcuvate.suppress_stdout"><code class="docutils literal notranslate"><span class="pre">suppress_stdout()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-raft_opt.raft_opt">raft_opt.raft_opt module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.raft_opt.MooringSystem"><code class="docutils literal notranslate"><span class="pre">MooringSystem</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.raft_opt.OWT"><code class="docutils literal notranslate"><span class="pre">OWT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.raft_opt.Platform"><code class="docutils literal notranslate"><span class="pre">Platform</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.raft_opt.Turbine"><code class="docutils literal notranslate"><span class="pre">Turbine</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.raft_opt.WeightedOWT"><code class="docutils literal notranslate"><span class="pre">WeightedOWT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.raft_opt.WeightedObjectives"><code class="docutils literal notranslate"><span class="pre">WeightedObjectives</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.raft_opt.import_calcuvate"><code class="docutils literal notranslate"><span class="pre">import_calcuvate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.raft_opt.raft_opt"><code class="docutils literal notranslate"><span class="pre">raft_opt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.raft_opt.raft_stability"><code class="docutils literal notranslate"><span class="pre">raft_stability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.raft_opt.raft_weighted_opt"><code class="docutils literal notranslate"><span class="pre">raft_weighted_opt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.raft_opt.run_opt"><code class="docutils literal notranslate"><span class="pre">run_opt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.raft_opt.run_stability"><code class="docutils literal notranslate"><span class="pre">run_stability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.raft_opt.run_weighted_opt"><code class="docutils literal notranslate"><span class="pre">run_weighted_opt()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-raft_opt.visualizer">raft_opt.visualizer module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.visualizer.extract_data"><code class="docutils literal notranslate"><span class="pre">extract_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raft_opt.visualizer.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-raft_opt">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html">tests package</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -65,6 +115,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">raft-opt-modular</a></li>
       <li class="breadcrumb-item active">raft_opt package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/raft_opt.rst.txt" rel="nofollow"> View page source</a>
@@ -76,31 +127,724 @@
            <div itemprop="articleBody">
              
   <section id="raft-opt-package">
-<h1>raft_opt package<a class="headerlink" href="#raft-opt-package" title="Permalink to this heading"></a></h1>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+<h1>raft_opt package<a class="headerlink" href="#raft-opt-package" title="Link to this heading"></a></h1>
+<section id="module-raft_opt.adjustStability">
+<span id="raft-opt-adjuststability-module"></span><h2>raft_opt.adjustStability module<a class="headerlink" href="#module-raft_opt.adjustStability" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="raft_opt.adjustStability.AdjustBallast">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">raft_opt.adjustStability.</span></span><span class="sig-name descname"><span class="pre">AdjustBallast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">design</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calcuvate</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.adjustStability.AdjustBallast" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ExplicitComponent</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.adjustStability.AdjustBallast.compute">
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.adjustStability.AdjustBallast.compute" title="Link to this definition"></a></dt>
+<dd><p>Compute outputs given inputs. The model is assumed to be in an unscaled state.</p>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>inputs<span class="classifier">Vector</span></dt><dd><p>Unscaled, dimensional input variables read via inputs[key].</p>
+</dd>
+<dt>outputs<span class="classifier">Vector</span></dt><dd><p>Unscaled, dimensional output variables read via outputs[key].</p>
+</dd>
+<dt>discrete_inputs<span class="classifier">dict or None</span></dt><dd><p>If not None, dict containing discrete input values.</p>
+</dd>
+<dt>discrete_outputs<span class="classifier">dict or None</span></dt><dd><p>If not None, dict containing discrete output values.</p>
+</dd>
+</dl>
 </section>
-<section id="raft-opt-adjuststability-module">
-<h2>raft_opt.adjustStability module<a class="headerlink" href="#raft-opt-adjuststability-module" title="Permalink to this heading"></a></h2>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.adjustStability.AdjustBallast.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.adjustStability.AdjustBallast.setup" title="Link to this definition"></a></dt>
+<dd><p>Declare inputs and outputs.</p>
+<dl class="simple">
+<dt>Available attributes:</dt><dd><p>name
+pathname
+comm
+options</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.adjustStability.AdjustBallast.setup_partials">
+<span class="sig-name descname"><span class="pre">setup_partials</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.adjustStability.AdjustBallast.setup_partials" title="Link to this definition"></a></dt>
+<dd><p>Declare partials.</p>
+<p>This is meant to be overridden by component classes.  All partials should be
+declared here since this is called after all size/shape information is known for
+all variables.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="raft_opt.adjustStability.AdjustMooring">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">raft_opt.adjustStability.</span></span><span class="sig-name descname"><span class="pre">AdjustMooring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">design</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calcuvate</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.adjustStability.AdjustMooring" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ExplicitComponent</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.adjustStability.AdjustMooring.compute">
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.adjustStability.AdjustMooring.compute" title="Link to this definition"></a></dt>
+<dd><p>Compute outputs given inputs. The model is assumed to be in an unscaled state.</p>
+<section id="id1">
+<h3>Parameters<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>inputs<span class="classifier">Vector</span></dt><dd><p>Unscaled, dimensional input variables read via inputs[key].</p>
+</dd>
+<dt>outputs<span class="classifier">Vector</span></dt><dd><p>Unscaled, dimensional output variables read via outputs[key].</p>
+</dd>
+<dt>discrete_inputs<span class="classifier">dict or None</span></dt><dd><p>If not None, dict containing discrete input values.</p>
+</dd>
+<dt>discrete_outputs<span class="classifier">dict or None</span></dt><dd><p>If not None, dict containing discrete output values.</p>
+</dd>
+</dl>
 </section>
-<section id="raft-opt-calcuvate-module">
-<h2>raft_opt.calcuvate module<a class="headerlink" href="#raft-opt-calcuvate-module" title="Permalink to this heading"></a></h2>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.adjustStability.AdjustMooring.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.adjustStability.AdjustMooring.setup" title="Link to this definition"></a></dt>
+<dd><p>Declare inputs and outputs.</p>
+<dl class="simple">
+<dt>Available attributes:</dt><dd><p>name
+pathname
+comm
+options</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.adjustStability.AdjustMooring.setup_partials">
+<span class="sig-name descname"><span class="pre">setup_partials</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.adjustStability.AdjustMooring.setup_partials" title="Link to this definition"></a></dt>
+<dd><p>Declare partials.</p>
+<p>This is meant to be overridden by component classes.  All partials should be
+declared here since this is called after all size/shape information is known for
+all variables.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="raft_opt.adjustStability.main">
+<span class="sig-prename descclassname"><span class="pre">raft_opt.adjustStability.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">design</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calcuvate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SLSQP'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.adjustStability.main" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="raft_opt.adjustStability.main_ballast">
+<span class="sig-prename descclassname"><span class="pre">raft_opt.adjustStability.</span></span><span class="sig-name descname"><span class="pre">main_ballast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">design</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calcuvate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SLSQP'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.adjustStability.main_ballast" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="raft_opt.adjustStability.main_mooring">
+<span class="sig-prename descclassname"><span class="pre">raft_opt.adjustStability.</span></span><span class="sig-name descname"><span class="pre">main_mooring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">design</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calcuvate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SLSQP'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.adjustStability.main_mooring" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 </section>
-<section id="raft-opt-raft-opt-module">
-<h2>raft_opt.raft_opt module<a class="headerlink" href="#raft-opt-raft-opt-module" title="Permalink to this heading"></a></h2>
+<section id="module-raft_opt.calcuvate">
+<span id="raft-opt-calcuvate-module"></span><h2>raft_opt.calcuvate module<a class="headerlink" href="#module-raft_opt.calcuvate" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="raft_opt.calcuvate.calcuvate">
+<span class="sig-prename descclassname"><span class="pre">raft_opt.calcuvate.</span></span><span class="sig-name descname"><span class="pre">calcuvate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">design</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_mooring</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.calcuvate.calcuvate" title="Link to this definition"></a></dt>
+<dd><p>Updates the RAFT design dictionary based on platform and mooring design variables.</p>
+<p>This function acts as the interface between the optimizer’s design variables
+and the RAFT simulation model. It calls helper functions to update specific
+parts of the design dictionary (platform columns, mooring system) based on
+the current values of the design variables.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>design (dict): The complete RAFT design dictionary.
+x_platform (dict): Dictionary containing current platform design variables.
+x_mooring (dict): Dictionary containing current mooring design variables.</p>
+</dd>
+<dt>Returns:</dt><dd><p>dict: The updated RAFT design dictionary, ready for simulation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="raft_opt.calcuvate.intersect_dist_1">
+<span class="sig-prename descclassname"><span class="pre">raft_opt.calcuvate.</span></span><span class="sig-name descname"><span class="pre">intersect_dist_1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">design</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_platform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_mooring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.calcuvate.intersect_dist_1" title="Link to this definition"></a></dt>
+<dd><p>Calculates the minimum distance between the rotor plane and mooring line 1 (Used for tidal turbines)</p>
+<p>Determines the point on mooring line 1 (anchor A to fairlead A) that is
+closest to the rotor center and calculates the distance. Used as a constraint
+to prevent mooring line/rotor interaction.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>design (dict, optional): The RAFT design dictionary. 
+model (raft.Model, optional): The executed RAFT model object. 
+x_platform (dict, optional): Dictionary of platform design variables. 
+x_mooring (dict, optional): Dictionary of mooring design variables.</p>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>float: The minimum distance between the rotor center and mooring line 1.</dt><dd><p>Returns a small number (or handles error) if calculation fails.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="raft_opt.calcuvate.intersect_dist_2">
+<span class="sig-prename descclassname"><span class="pre">raft_opt.calcuvate.</span></span><span class="sig-name descname"><span class="pre">intersect_dist_2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">design</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_platform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_mooring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.calcuvate.intersect_dist_2" title="Link to this definition"></a></dt>
+<dd><p>Similar to intersect_dist_1</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="raft_opt.calcuvate.intersect_dist_3">
+<span class="sig-prename descclassname"><span class="pre">raft_opt.calcuvate.</span></span><span class="sig-name descname"><span class="pre">intersect_dist_3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">design</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_platform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_mooring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.calcuvate.intersect_dist_3" title="Link to this definition"></a></dt>
+<dd><p>Similar to intersect_dist_1</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="raft_opt.calcuvate.intersect_dist_4">
+<span class="sig-prename descclassname"><span class="pre">raft_opt.calcuvate.</span></span><span class="sig-name descname"><span class="pre">intersect_dist_4</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">design</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_platform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_mooring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.calcuvate.intersect_dist_4" title="Link to this definition"></a></dt>
+<dd><p>Similar to intersect_dist_1</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="raft_opt.calcuvate.power_mass_ratio">
+<span class="sig-prename descclassname"><span class="pre">raft_opt.calcuvate.</span></span><span class="sig-name descname"><span class="pre">power_mass_ratio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">design</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_platform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_mooring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.calcuvate.power_mass_ratio" title="Link to this definition"></a></dt>
+<dd><p>Calculates the negative power-to-mass ratio for the FOWT.</p>
+<p>Used as an objective function (minimization implies maximizing power/mass).</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>design (dict, optional): The RAFT design dictionary. 
+model (raft.Model, optional): The executed RAFT model object. 
+x_platform (dict, optional): Dictionary of platform design variables. 
+x_mooring (dict, optional): Dictionary of mooring design variables.</p>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>float: The negative of (rotor aerodynamic power / platform shell mass).</dt><dd><p>Returns a large number (or handles error) if model results are unavailable.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="raft_opt.calcuvate.suppress_stdout">
+<span class="sig-prename descclassname"><span class="pre">raft_opt.calcuvate.</span></span><span class="sig-name descname"><span class="pre">suppress_stdout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.calcuvate.suppress_stdout" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 </section>
-<section id="raft-opt-visualizer-module">
-<h2>raft_opt.visualizer module<a class="headerlink" href="#raft-opt-visualizer-module" title="Permalink to this heading"></a></h2>
+<section id="module-raft_opt.raft_opt">
+<span id="raft-opt-raft-opt-module"></span><h2>raft_opt.raft_opt module<a class="headerlink" href="#module-raft_opt.raft_opt" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.MooringSystem">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">raft_opt.raft_opt.</span></span><span class="sig-name descname"><span class="pre">MooringSystem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.MooringSystem" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ExplicitComponent</span></code></p>
+<p>Represents the mooring system component in the OpenMDAO model.</p>
+<p>Handles the definition of mooring system inputs based on the design
+and user input YAML files. This includes primary design variables,
+secondary design variables (if any), and fixed parameters (like point
+locations if not varied). It also declares mooring-related outputs
+specified by the user.</p>
+<dl class="simple">
+<dt>Options:</dt><dd><p>design (dict): Dictionary loaded from the design input YAML file.
+user_input (dict): Dictionary loaded from the user input YAML file.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.MooringSystem.initialize">
+<span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.MooringSystem.initialize" title="Link to this definition"></a></dt>
+<dd><p>Declares options for the MooringSystem component.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.MooringSystem.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.MooringSystem.setup" title="Link to this definition"></a></dt>
+<dd><p>Defines inputs and outputs for the MooringSystem component.</p>
+<p>Reads the ‘design’ and ‘user_input’ dictionaries to determine
+which mooring parameters are design variables (inputs) and which
+quantities should be computed as outputs.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.OWT">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">raft_opt.raft_opt.</span></span><span class="sig-name descname"><span class="pre">OWT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.OWT" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#raft_opt.raft_opt.Platform" title="raft_opt.raft_opt.Platform"><code class="xref py py-class docutils literal notranslate"><span class="pre">Platform</span></code></a>, <a class="reference internal" href="#raft_opt.raft_opt.MooringSystem" title="raft_opt.raft_opt.MooringSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">MooringSystem</span></code></a>, <a class="reference internal" href="#raft_opt.raft_opt.Turbine" title="raft_opt.raft_opt.Turbine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Turbine</span></code></a></p>
+<p>OpenMDAO ExplicitComponent representing the Offshore Wind Turbine system.</p>
+<p>Integrates Platform, MooringSystem, and Turbine characteristics.
+It takes design variables as inputs, runs the RAFT analysis using the
+‘calcuvate’ module to update the design dictionary, and computes
+specified outputs (objectives and constraints).</p>
+<p>Inherits setup methods from Platform and MooringSystem to define inputs
+and outputs related to those subsystems.</p>
+<dl class="simple">
+<dt>Options:</dt><dd><p>design (dict): Dictionary loaded from the design input YAML file.
+user_input (dict): Dictionary loaded from the user input YAML file.</p>
+</dd>
+<dt>Attributes:</dt><dd><dl class="simple">
+<dt>is_solver_divergence (bool): Flag indicating if the RAFT solver</dt><dd><p>encountered an error during computation.</p>
+</dd>
+<dt>surge, sway, heave, roll, pitch, yaw (float | None): Static offsets</dt><dd><p>calculated by RAFT’s analyzeUnloaded.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.OWT.compute">
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.OWT.compute" title="Link to this definition"></a></dt>
+<dd><p>Performs the RAFT analysis for the current set of inputs.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>inputs (om.Vector): Input vector containing current design variable values.
+outputs (om.Vector): Output vector to store computed objective and constraint values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.OWT.get_optimized_data">
+<span class="sig-name descname"><span class="pre">get_optimized_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.OWT.get_optimized_data" title="Link to this definition"></a></dt>
+<dd><p>Returns the final design and user_input dictionaries.</p>
+<p>Note: This currently returns the self.design and self.user_input
+attributes. Be aware that self.design might have been modified
+in the last compute call if not handled carefully (e.g., using deepcopy).</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>tuple: A tuple containing:</dt><dd><ul class="simple">
+<li><p>dict: The potentially modified design dictionary.</p></li>
+<li><p>dict: The potentially modified user_input dictionary.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.OWT.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.OWT.setup" title="Link to this definition"></a></dt>
+<dd><p>Declares partial derivatives for optimization.</p>
+<p>Uses finite differencing (‘fd’) to approximate partial derivatives
+of outputs (objectives and constraints) with respect to inputs
+(design variables). Step sizes are adjusted based on the magnitude
+of the design variable bounds.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.OWT.setup_partials">
+<span class="sig-name descname"><span class="pre">setup_partials</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.OWT.setup_partials" title="Link to this definition"></a></dt>
+<dd><p>Declares partial derivatives for optimization.</p>
+<p>Uses finite differencing (‘fd’) to approximate partial derivatives
+of outputs (objectives and constraints) with respect to inputs
+(design variables). Step sizes are adjusted based on the magnitude
+of the design variable bounds.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.Platform">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">raft_opt.raft_opt.</span></span><span class="sig-name descname"><span class="pre">Platform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.Platform" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ExplicitComponent</span></code></p>
+<p>Represents the floating platform component in the OpenMDAO model.</p>
+<p>Handles the definition of platform-related inputs based on the design
+and user input YAML files. This includes primary design variables,
+secondary design variables (if any), and fixed parameters. It also
+declares platform-related outputs specified by the user.</p>
+<dl class="simple">
+<dt>Options:</dt><dd><p>design (dict): Dictionary loaded from the design input YAML file.
+user_input (dict): Dictionary loaded from the user input YAML file.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.Platform.initialize">
+<span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.Platform.initialize" title="Link to this definition"></a></dt>
+<dd><p>Declares options for the Platform component.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.Platform.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.Platform.setup" title="Link to this definition"></a></dt>
+<dd><p>Defines inputs and outputs for the Platform component.</p>
+<p>Reads the ‘design’ and ‘user_input’ dictionaries to determine
+which platform parameters are design variables (inputs) and which
+quantities should be computed as outputs.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.Turbine">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">raft_opt.raft_opt.</span></span><span class="sig-name descname"><span class="pre">Turbine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.Turbine" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ExplicitComponent</span></code></p>
+<p>Represents the turbine component within the OpenMDAO model.</p>
+<p>Placeholder class. Currently does not implement specific turbine logic
+within this component, but acts as a structural element in the model
+hierarchy inherited by OWT.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.WeightedOWT">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">raft_opt.raft_opt.</span></span><span class="sig-name descname"><span class="pre">WeightedOWT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.WeightedOWT" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ExplicitComponent</span></code></p>
+<p>Combines objective function values from multiple probabilistic cases.</p>
+<p>Takes objective values from different analysis cases (e.g., different
+environmental conditions) as inputs and computes a single weighted
+average based on the probability of each case. The formula is:
+sum(obj_i * probability_i).</p>
+<dl class="simple">
+<dt>Options:</dt><dd><dl class="simple">
+<dt>p_values (list[float]): List of probabilities for each input objective/case.</dt><dd><p>Should sum to 1.0 ideally.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.WeightedOWT.compute">
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.WeightedOWT.compute" title="Link to this definition"></a></dt>
+<dd><p>Computes the probability-weighted sum of case objectives.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>inputs (om.Vector): Input vector containing objective values from each case (obj_0, obj_1, …).
+outputs (om.Vector): Output vector where ‘weighted_multi_obj’ is stored.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.WeightedOWT.compute_partials">
+<span class="sig-name descname"><span class="pre">compute_partials</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partials</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.WeightedOWT.compute_partials" title="Link to this definition"></a></dt>
+<dd><p>Computes analytical partial derivatives.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>inputs (om.Vector): Input vector (not directly used).
+partials (om.Jacobian): Jacobian object to store derivative values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.WeightedOWT.initialize">
+<span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.WeightedOWT.initialize" title="Link to this definition"></a></dt>
+<dd><p>Declares options for the WeightedOWT component.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.WeightedOWT.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.WeightedOWT.setup" title="Link to this definition"></a></dt>
+<dd><p>Defines inputs for case objectives and the combined output.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.WeightedOWT.setup_partials">
+<span class="sig-name descname"><span class="pre">setup_partials</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.WeightedOWT.setup_partials" title="Link to this definition"></a></dt>
+<dd><p>Declares analytical partial derivatives.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.WeightedObjectives">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">raft_opt.raft_opt.</span></span><span class="sig-name descname"><span class="pre">WeightedObjectives</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.WeightedObjectives" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ExplicitComponent</span></code></p>
+<p>Combines multiple objective functions into a single weighted sum.</p>
+<p>Takes individual objective values as inputs and computes a single
+output ‘weighted_multi_obj’ using specified weights and reference values.
+The formula is: sum(obj_i * weight_i / ref_value_i).</p>
+<dl class="simple">
+<dt>Options:</dt><dd><p>w_values (list[float]): List of weights for each objective.
+r_values (list[float]): List of reference values for normalization.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.WeightedObjectives.compute">
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.WeightedObjectives.compute" title="Link to this definition"></a></dt>
+<dd><p>Computes the weighted sum of objectives.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>inputs (om.Vector): Input vector containing individual objective values (obj_0, obj_1, …).
+outputs (om.Vector): Output vector where ‘weighted_multi_obj’ is stored.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.WeightedObjectives.compute_partials">
+<span class="sig-name descname"><span class="pre">compute_partials</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partials</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.WeightedObjectives.compute_partials" title="Link to this definition"></a></dt>
+<dd><p>Computes analytical partial derivatives.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>inputs (om.Vector): Input vector (not directly used, derivatives are constant).
+partials (om.Jacobian): Jacobian object to store derivative values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.WeightedObjectives.initialize">
+<span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.WeightedObjectives.initialize" title="Link to this definition"></a></dt>
+<dd><p>Perform any one-time initialization run at instantiation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.WeightedObjectives.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.WeightedObjectives.setup" title="Link to this definition"></a></dt>
+<dd><p>Declares options for the WeightedObjectives component.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.WeightedObjectives.setup_partials">
+<span class="sig-name descname"><span class="pre">setup_partials</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.WeightedObjectives.setup_partials" title="Link to this definition"></a></dt>
+<dd><p>Declares analytical partial derivatives.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.import_calcuvate">
+<span class="sig-prename descclassname"><span class="pre">raft_opt.raft_opt.</span></span><span class="sig-name descname"><span class="pre">import_calcuvate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.import_calcuvate" title="Link to this definition"></a></dt>
+<dd><p>Dynamically imports the ‘calcuvate’ module from a specified file path.</p>
+<p>This allows the optimization script to use custom calculation functions
+defined externally.</p>
+<dl>
+<dt>Args:</dt><dd><p>module_name (str): The name to assign to the imported module (e.g., ‘calcuvate’).
+file_path (str): The absolute or relative path to the Python file</p>
+<blockquote>
+<div><p>containing the module’s code.</p>
+</div></blockquote>
+</dd>
+<dt>Returns:</dt><dd><p>module: The imported module object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.raft_opt">
+<span class="sig-prename descclassname"><span class="pre">raft_opt.raft_opt.</span></span><span class="sig-name descname"><span class="pre">raft_opt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">design</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calcuvate_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.raft_opt" title="Link to this definition"></a></dt>
+<dd><p>Core logic for setting up and running a standard (deterministic) optimization.</p>
+<p>Internal function called by <cite>run_opt</cite>.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>design (dict): Design dictionary.
+user_input (dict): User input dictionary.
+calcuvate_path (str): Path to ‘calcuvate.py’.</p>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>tuple: A tuple containing:</dt><dd><ul class="simple">
+<li><p>dict: The final optimized design dictionary.</p></li>
+<li><p>dict: The user_input dictionary with updated design variable values.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.raft_stability">
+<span class="sig-prename descclassname"><span class="pre">raft_opt.raft_opt.</span></span><span class="sig-name descname"><span class="pre">raft_stability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">design</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calcuvate_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.raft_stability" title="Link to this definition"></a></dt>
+<dd><p>Core logic for performing stability adjustment.</p>
+<p>Reads primary and secondary design variables from input dictionaries.
+If <cite>update_stability</cite> is True in <cite>user_input</cite> for platform or mooring,
+it calls <cite>adjustStability.main</cite> (which runs a sub-optimization) to find
+the secondary variable values that minimize static offsets.
+Finally, it uses <cite>calcuvate</cite> to update the design dictionary with both
+primary and the (potentially adjusted) secondary variables.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>design (dict): Input design dictionary.
+user_input (dict): User input dictionary.
+calcuvate_path (str): Path to ‘calcuvate.py’.</p>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>tuple: A tuple containing:</dt><dd><ul class="simple">
+<li><p>dict: The updated design dictionary.</p></li>
+<li><p>dict: The user_input dictionary with potentially updated secondary variables.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.raft_weighted_opt">
+<span class="sig-prename descclassname"><span class="pre">raft_opt.raft_opt.</span></span><span class="sig-name descname"><span class="pre">raft_weighted_opt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">design</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calcuvate_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.raft_weighted_opt" title="Link to this definition"></a></dt>
+<dd><p>Core logic for setting up and running the weighted (probabilistic) optimization.</p>
+<p>Internal function called by <cite>run_weighted_opt</cite>.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>design (dict): Base design dictionary.
+user_input (dict): User input dictionary.
+cases (dict): Case-specific data.
+p_values (list[float]): Case probabilities.
+calcuvate_path (str): Path to ‘calcuvate.py’.</p>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>tuple: A tuple containing:</dt><dd><ul class="simple">
+<li><p>dict: The final optimized design dictionary.</p></li>
+<li><p>dict: The user_input dictionary.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.run_opt">
+<span class="sig-prename descclassname"><span class="pre">raft_opt.raft_opt.</span></span><span class="sig-name descname"><span class="pre">run_opt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">design</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calcuvate_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.run_opt" title="Link to this definition"></a></dt>
+<dd><p>Runs a standard RAFT optimization for a single deterministic case.</p>
+<p>Sets up and executes an OpenMDAO problem with one OWT instance.
+The objective function is calculated using the WeightedObjectives component
+based on user-defined weights and references.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>design (dict): Design dictionary.
+user_input (dict): User input dictionary specifying optimization settings.
+calcuvate_path (str): Path to the ‘calcuvate.py’ file.
+output_log_file (str): Path to the file where stdout/stderr will be redirected.</p>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>tuple: A tuple containing:</dt><dd><ul class="simple">
+<li><p>dict: The final optimized design dictionary.</p></li>
+<li><p>dict: The user_input dictionary with updated design variables.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.run_stability">
+<span class="sig-prename descclassname"><span class="pre">raft_opt.raft_opt.</span></span><span class="sig-name descname"><span class="pre">run_stability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">design</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calcuvate_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.run_stability" title="Link to this definition"></a></dt>
+<dd><p>Runs only the stability adjustment step without full optimization.</p>
+<p>This function is intended to adjust secondary design variables (e.g., ballast)
+to meet stability requirements (e.g., zero pitch/roll offsets) for a
+<em>given</em> set of primary design variables. It calls the <cite>raft_stability</cite>
+function which performs this adjustment.</p>
+<dl>
+<dt>Args:</dt><dd><p>design (dict): Design dictionary with primary variables set.
+user_input (dict): User input dictionary specifying stability settings</p>
+<blockquote>
+<div><p>(secondary variables, bounds, targets).</p>
+</div></blockquote>
+<p>calcuvate_path (str): Path to the ‘calcuvate.py’ file.
+output_log_file (str): Path to the file where stdout/stderr will be redirected.</p>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>tuple: A tuple containing:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>dict: The design dictionary updated by calcuvate using the</dt><dd><p>adjusted secondary variables.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>dict: The user_input dictionary, potentially with updated</dt><dd><p>secondary variable values.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="raft_opt.raft_opt.run_weighted_opt">
+<span class="sig-prename descclassname"><span class="pre">raft_opt.raft_opt.</span></span><span class="sig-name descname"><span class="pre">run_weighted_opt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">design</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calcuvate_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.raft_opt.run_weighted_opt" title="Link to this definition"></a></dt>
+<dd><p>Runs a RAFT optimization considering multiple probabilistic cases.</p>
+<p>Sets up and executes an OpenMDAO problem where multiple OWT instances
+(one for each case) are evaluated. Their individual weighted objectives
+are then combined using probabilities in the WeightedOWT component.</p>
+<dl>
+<dt>Args:</dt><dd><p>design (dict): Base design dictionary.
+user_input (dict): User input dictionary specifying optimization settings.
+cases (dict): Dictionary containing case-specific data (e.g., environmental conditions).</p>
+<blockquote>
+<div><p>Expected format: {‘data’: [case_data_0, case_data_1, …]}.</p>
+</div></blockquote>
+<p>p_values (list[float]): List of probabilities corresponding to each case in <cite>cases[‘data’]</cite>.
+calcuvate_path (str): Path to the ‘calcuvate.py’ file.
+output_log_file (str): Path to the file where stdout/stderr will be redirected.</p>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>tuple: A tuple containing:</dt><dd><ul class="simple">
+<li><p>dict: The final optimized design dictionary (potentially modified).</p></li>
+<li><p>dict: The user_input dictionary (potentially modified).</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this heading"></a></h2>
+<section id="module-raft_opt.visualizer">
+<span id="raft-opt-visualizer-module"></span><h2>raft_opt.visualizer module<a class="headerlink" href="#module-raft_opt.visualizer" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="raft_opt.visualizer.extract_data">
+<span class="sig-prename descclassname"><span class="pre">raft_opt.visualizer.</span></span><span class="sig-name descname"><span class="pre">extract_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">design_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.visualizer.extract_data" title="Link to this definition"></a></dt>
+<dd><p>Extracts optimization data from an OpenMDAO CaseReader.</p>
+<p>Parses driver cases to retrieve iteration history for objectives,
+constraints, and design variables. It also reads the design and
+user input YAML files to get the names and references for these
+quantities.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>driver (om.CaseReader): An OpenMDAO CaseReader object initialized</dt><dd><p>with the optimization recording (e.g., .sql file).</p>
+</dd>
+<dt>design_file (str): Path to the design YAML file. This is used</dt><dd><p>to understand the structure if needed, though
+currently user_input.yaml is more heavily used
+for naming.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>tuple: A tuple containing:</dt><dd><ul class="simple">
+<li><p>list: Iteration numbers.</p></li>
+<li><dl class="simple">
+<dt>dict: A dictionary where keys are objective names (aliases)</dt><dd><p>and values are lists of their values at each iteration.
+Objective values are scaled by their reference values.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>dict: A dictionary where keys are constraint names and values</dt><dd><p>are lists of their values at each iteration.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>dict: A dictionary where keys are design variable names and</dt><dd><p>values are lists of their values at each iteration.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="raft_opt.visualizer.main">
+<span class="sig-prename descclassname"><span class="pre">raft_opt.visualizer.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sql_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">design_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#raft_opt.visualizer.main" title="Link to this definition"></a></dt>
+<dd><p>Runs a Streamlit application to visualize optimization convergence.</p>
+<p>Continuously monitors an OpenMDAO SQL recording file for updates and
+plots the history of objectives, constraints, and design variables
+using Altair charts in a Streamlit web interface.</p>
+<p>The application assumes “user_input.yaml” is present in the current
+working directory to fetch names and references for plotting.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>sql_file (str): Path to the OpenMDAO SQL recorder file (e.g., “cases.sql”).
+design_file (str): Path to the design YAML file, passed to <cite>extract_data</cite>.</p>
+</dd>
+<dt>Note:</dt><dd><p>This function runs an infinite loop to periodically check the SQL file
+for updates. It’s designed to be run as a Streamlit app.
+To stop the app, you typically interrupt the Streamlit process (e.g., Ctrl+C).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-raft_opt">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-raft_opt" title="Link to this heading"></a></h2>
+<p>Top-level package for raft-opt.</p>
 </section>
 </section>
 
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="raft-opt-modular" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="setup.html" class="btn btn-neutral float-right" title="setup module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

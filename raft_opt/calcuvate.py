@@ -146,10 +146,10 @@ def power_mass_ratio(design=None, model=None, x_platform=None, x_mooring=None):
     Used as an objective function (minimization implies maximizing power/mass).
 
     Args:
-        design (dict, optional): The RAFT design dictionary. Defaults to None.
-        model (raft.Model, optional): The executed RAFT model object. Defaults to None.
-        x_platform (dict, optional): Dictionary of platform design variables. Defaults to None.
-        x_mooring (dict, optional): Dictionary of mooring design variables. Defaults to None.
+        design (dict, optional): The RAFT design dictionary. 
+        model (raft.Model, optional): The executed RAFT model object. 
+        x_platform (dict, optional): Dictionary of platform design variables. 
+        x_mooring (dict, optional): Dictionary of mooring design variables. 
 
     Returns:
         float: The negative of (rotor aerodynamic power / platform shell mass).
@@ -170,10 +170,10 @@ def intersect_dist_1(design=None, model=None, x_platform=None, x_mooring=None):
     to prevent mooring line/rotor interaction.
 
     Args:
-        design (dict, optional): The RAFT design dictionary. Defaults to None.
-        model (raft.Model, optional): The executed RAFT model object. Defaults to None.
-        x_platform (dict, optional): Dictionary of platform design variables. Defaults to None.
-        x_mooring (dict, optional): Dictionary of mooring design variables. Defaults to None.
+        design (dict, optional): The RAFT design dictionary. 
+        model (raft.Model, optional): The executed RAFT model object. 
+        x_platform (dict, optional): Dictionary of platform design variables. 
+        x_mooring (dict, optional): Dictionary of mooring design variables. 
 
     Returns:
         float: The minimum distance between the rotor center and mooring line 1.
@@ -202,6 +202,9 @@ def intersect_dist_1(design=None, model=None, x_platform=None, x_mooring=None):
     return (intersect_dist_1)
 
 def intersect_dist_2(design=None, model=None, x_platform=None, x_mooring=None):
+    """
+    Similar to intersect_dist_1
+    """
     x_rotor = design['turbine']['rotorCoords'][0][0]
     y_rotor = design['turbine']['rotorCoords'][0][1]
     z_rotor = design['turbine']['Zhub']
@@ -226,6 +229,9 @@ def intersect_dist_2(design=None, model=None, x_platform=None, x_mooring=None):
 
 
 def intersect_dist_3(design=None, model=None, x_platform=None, x_mooring=None):
+    """
+    Similar to intersect_dist_1
+    """
     x_rotor = design['turbine']['rotorCoords'][0][0]
     y_rotor = design['turbine']['rotorCoords'][0][1]
     z_rotor = design['turbine']['Zhub']
@@ -250,6 +256,9 @@ def intersect_dist_3(design=None, model=None, x_platform=None, x_mooring=None):
 
 
 def intersect_dist_4(design=None, model=None, x_platform=None, x_mooring=None):
+    """
+    Similar to intersect_dist_1
+    """
     x_rotor = design['turbine']['rotorCoords'][0][0]
     y_rotor = design['turbine']['rotorCoords'][0][1]
     z_rotor = design['turbine']['Zhub']

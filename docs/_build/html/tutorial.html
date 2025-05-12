@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tutorial &mdash; RAFT-OPT 2.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
   
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=60dbed4a"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -61,6 +61,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="example-1.html">Example-1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="example-2.html">Example-2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example-3.html">Example-3</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">raft-opt-modular</a></li>
 </ul>
 
@@ -89,7 +90,7 @@
            <div itemprop="articleBody">
              
   <section id="tutorial">
-<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this heading"></a></h1>
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Link to this heading"></a></h1>
 <p>In this tutorial, we will guide you through all the necessary
 steps to run a Floating Offshore Wind Turbine (FOWT)
 optimization problem. There are three key files required
@@ -100,7 +101,7 @@ to run any optimization using RAFT-Opt:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">calcuvate.py</span></code></p></li>
 </ul>
 <section id="user-input-file">
-<h2>User Input File<a class="headerlink" href="#user-input-file" title="Permalink to this heading"></a></h2>
+<h2>User Input File<a class="headerlink" href="#user-input-file" title="Link to this heading"></a></h2>
 <p>The user input file is where the optimization problem needs
 to be set up. This YAML file consists of the following components:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">cases</span><span class="p">:</span><span class="w"> </span><span class="c1"># Only one environmental state</span>
@@ -208,7 +209,7 @@ to be set up. This YAML file consists of the following components:</p>
 </div>
 <p>Now, let’s break this script down and understand each section</p>
 <section id="objective-functions">
-<h3>Objective Functions<a class="headerlink" href="#objective-functions" title="Permalink to this heading"></a></h3>
+<h3>Objective Functions<a class="headerlink" href="#objective-functions" title="Link to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">objective_function</span></code> is always minimized. If you want to
 maximize the objective function, add a user defined function
 inside <code class="docutils literal notranslate"><span class="pre">calcuvate.py</span></code>.</p>
@@ -232,7 +233,7 @@ inside <code class="docutils literal notranslate"><span class="pre">calcuvate.py
 <p>We use mass as a proxy for the levelized cost of energy (LCOE), since a lower mass implies a lower cost of construction. The primary goal is to reduce the overall FOWT mass; therefore, <span class="math notranslate nohighlight">\(\alpha\)</span> is assigned a value of 0.85, prioritizing it three times more than the tension in the mooring lines.</p>
 </section>
 <section id="platform">
-<h3>Platform<a class="headerlink" href="#platform" title="Permalink to this heading"></a></h3>
+<h3>Platform<a class="headerlink" href="#platform" title="Link to this heading"></a></h3>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">platform</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">optimize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True or False</span>
 <span class="w">    </span><span class="nt">update_stability</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True or False</span>
@@ -289,7 +290,7 @@ as demonstrated in the mooring section of the user_input.yaml file. The stabilit
 the geometric optimization for lowering the mass and tension.</p>
 </section>
 <section id="mooring">
-<h3>Mooring<a class="headerlink" href="#mooring" title="Permalink to this heading"></a></h3>
+<h3>Mooring<a class="headerlink" href="#mooring" title="Link to this heading"></a></h3>
 <p>The mooring section of the script is very similar to the
 platform section.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">mooring</span><span class="p">:</span>
@@ -356,7 +357,7 @@ direct outputs from RAFT. Instead, these are custom user defined (defined within
 constraints used to inform the optimizer that they are not available within RAFT.</p>
 </section>
 <section id="optimization-settings">
-<h3>Optimization Settings<a class="headerlink" href="#optimization-settings" title="Permalink to this heading"></a></h3>
+<h3>Optimization Settings<a class="headerlink" href="#optimization-settings" title="Link to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">driver_information</span></code> section specifies the parameters and settings for the optimization driver used in RAFT-opt. This section includes the tolerance for convergence, the optimization algorithm to be used, and the name of the file where the results will be recorded.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">driver_information</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">tolerance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float</span><span class="w"> </span><span class="c1"># Value less than 0.01 is recommended</span>
@@ -399,7 +400,7 @@ constraints used to inform the optimizer that they are not available within RAFT
 </section>
 </section>
 <section id="calcuvate-py">
-<h2>Calcuvate.py<a class="headerlink" href="#calcuvate-py" title="Permalink to this heading"></a></h2>
+<h2>Calcuvate.py<a class="headerlink" href="#calcuvate-py" title="Link to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">calcuvate.py</span></code> consists of the following functions</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">calcuvate()</span></code></p></li>

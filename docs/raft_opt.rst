@@ -1,9 +1,6 @@
 raft\_opt package
 =================
 
-Submodules
-----------
-
 raft\_opt.adjustStability module
 --------------------------------
 
