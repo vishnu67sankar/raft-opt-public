@@ -13,10 +13,23 @@ import importlib.util
 import sys
 import os
 from copy import deepcopy 
-# global design, user_input, calcuvate
 
 
 def import_calcuvate(module_name, file_path):
+    """
+    Dynamically imports the 'calcuvate' module from a specified file path.
+
+    This allows the optimization script to use custom calculation functions
+    defined externally.
+
+    Args:
+        module_name (str): The name to assign to the imported module (e.g., 'calcuvate').
+        file_path (str): The absolute or relative path to the Python file
+                         containing the module's code.
+
+    Returns:
+        module: The imported module object.
+    """
     spec = importlib.util.spec_from_file_location(module_name, file_path)
     module = importlib.util.module_from_spec(spec)
     sys.modules[module_name] = module
@@ -24,16 +37,42 @@ def import_calcuvate(module_name, file_path):
     return module
 
 class Turbine(om.ExplicitComponent):
+    """
+    Represents the turbine component within the OpenMDAO model.
+
+    Placeholder class. Currently does not implement specific turbine logic
+    within this component, but acts as a structural element in the model
+    hierarchy inherited by OWT.
+    """
     pass
 
 class Platform(om.ExplicitComponent):
-    '''
-    '''
+    """
+    Represents the floating platform component in the OpenMDAO model.
+
+    Handles the definition of platform-related inputs based on the design
+    and user input YAML files. This includes primary design variables,
+    secondary design variables (if any), and fixed parameters. It also
+    declares platform-related outputs specified by the user.
+
+    Options:
+        design (dict): Dictionary loaded from the design input YAML file.
+        user_input (dict): Dictionary loaded from the user input YAML file.
+    """
+
     def initialize(self):
+        """Declares options for the Platform component."""
         self.options.declare('design', desc='design input yaml file name')
         self.options.declare('user_input', desc = 'user input yaml file name')
 
     def setup(self):
+        """
+        Defines inputs and outputs for the Platform component.
+
+        Reads the 'design' and 'user_input' dictionaries to determine
+        which platform parameters are design variables (inputs) and which
+        quantities should be computed as outputs.
+        """
         design = self.options['design']
         user_input = self.options['user_input']
       
@@ -77,11 +116,33 @@ class Platform(om.ExplicitComponent):
                     self.add_output(_output)
 
 class MooringSystem(om.ExplicitComponent):
+    """
+    Represents the mooring system component in the OpenMDAO model.
+
+    Handles the definition of mooring system inputs based on the design
+    and user input YAML files. This includes primary design variables,
+    secondary design variables (if any), and fixed parameters (like point
+    locations if not varied). It also declares mooring-related outputs
+    specified by the user.
+
+    Options:
+        design (dict): Dictionary loaded from the design input YAML file.
+        user_input (dict): Dictionary loaded from the user input YAML file.
+    """
+
     def initialize(self):
+        """Declares options for the MooringSystem component."""
         self.options.declare('design', desc='design input yaml file name')
         self.options.declare('user_input', desc = 'user input yaml file name')
        
     def setup(self):
+        """
+        Defines inputs and outputs for the MooringSystem component.
+
+        Reads the 'design' and 'user_input' dictionaries to determine
+        which mooring parameters are design variables (inputs) and which
+        quantities should be computed as outputs.
+        """
         design = self.options['design']
         user_input = self.options['user_input']
        
@@ -130,8 +191,37 @@ class MooringSystem(om.ExplicitComponent):
 
 
 class OWT(Platform, MooringSystem, Turbine):
+    """
+    OpenMDAO ExplicitComponent representing the Offshore Wind Turbine system.
 
+    Integrates Platform, MooringSystem, and Turbine characteristics.
+    It takes design variables as inputs, runs the RAFT analysis using the
+    'calcuvate' module to update the design dictionary, and computes
+    specified outputs (objectives and constraints).
+
+    Inherits setup methods from Platform and MooringSystem to define inputs
+    and outputs related to those subsystems.
+
+    Options:
+        design (dict): Dictionary loaded from the design input YAML file.
+        user_input (dict): Dictionary loaded from the user input YAML file.
+
+    Attributes:
+        is_solver_divergence (bool): Flag indicating if the RAFT solver
+                                     encountered an error during computation.
+        surge, sway, heave, roll, pitch, yaw (float | None): Static offsets
+                                    calculated by RAFT's analyzeUnloaded.
+    """
+     
     def setup(self):
+        """
+        Declares partial derivatives for optimization.
+
+        Uses finite differencing ('fd') to approximate partial derivatives
+        of outputs (objectives and constraints) with respect to inputs
+        (design variables). Step sizes are adjusted based on the magnitude
+        of the design variable bounds.
+        """
         self.design = self.options['design']
         self.user_input = self.options['user_input']
         self.is_solver_divergence = False
@@ -150,6 +240,14 @@ class OWT(Platform, MooringSystem, Turbine):
         self.Mbase = None
 
     def setup_partials(self):
+        """
+        Declares partial derivatives for optimization.
+
+        Uses finite differencing ('fd') to approximate partial derivatives
+        of outputs (objectives and constraints) with respect to inputs
+        (design variables). Step sizes are adjusted based on the magnitude
+        of the design variable bounds.
+        """
         objective_function = self.user_input['objective_function']
 
         if (self.user_input['platform']['inequality_constraints'] != 'None'):
@@ -240,6 +338,13 @@ class OWT(Platform, MooringSystem, Turbine):
                         self.declare_partials(_output, dv_key, method='fd', step=10e-1)
 
     def compute (self, inputs, outputs):
+        """
+        Performs the RAFT analysis for the current set of inputs.
+
+        Args:
+            inputs (om.Vector): Input vector containing current design variable values.
+            outputs (om.Vector): Output vector to store computed objective and constraint values.
+        """
         x_platform = {}
         x_primary_platform = {}
         x_secondary_platform = {}
@@ -469,15 +574,42 @@ class OWT(Platform, MooringSystem, Turbine):
         self.is_solver_divergence = False
     
     def get_optimized_data(self):
+        """
+        Returns the final design and user_input dictionaries.
+
+        Note: This currently returns the self.design and self.user_input
+        attributes. Be aware that self.design might have been modified
+        in the last compute call if not handled carefully (e.g., using deepcopy).
+
+        Returns:
+            tuple: A tuple containing:
+                - dict: The potentially modified design dictionary.
+                - dict: The potentially modified user_input dictionary.
+        """
         return (self.design, self.user_input)
 
 
 class WeightedObjectives(om.ExplicitComponent):
+    """
+    Combines multiple objective functions into a single weighted sum.
+
+    Takes individual objective values as inputs and computes a single
+    output 'weighted_multi_obj' using specified weights and reference values.
+    The formula is: sum(obj_i * weight_i / ref_value_i).
+
+    Options:
+        w_values (list[float]): List of weights for each objective.
+        r_values (list[float]): List of reference values for normalization.
+    """
+
     def initialize(self):
         self.options.declare('w_values', types=list, desc="List of weights associated with each objective function")
         self.options.declare('r_values', types=list, desc="List of references associated with each objective function")
     
     def setup(self):
+        """
+        Declares options for the WeightedObjectives component.
+        """
         num_objs = len(self.options['w_values'])
         
         for i in range(num_objs):
@@ -486,11 +618,19 @@ class WeightedObjectives(om.ExplicitComponent):
         self.add_output('weighted_multi_obj', val=0.0)
     
     def setup_partials(self):
+        """Declares analytical partial derivatives."""
         num_objs = len(self.options['w_values'])
         for i in range(num_objs):
             self.declare_partials('weighted_multi_obj', f'obj_{i}')
 
     def compute(self, inputs, outputs):
+        """
+        Computes the weighted sum of objectives.
+
+        Args:
+            inputs (om.Vector): Input vector containing individual objective values (obj_0, obj_1, ...).
+            outputs (om.Vector): Output vector where 'weighted_multi_obj' is stored.
+        """
         w_values = self.options['w_values']
         r_values = self.options['r_values']
         num_objs = len(self.options['w_values'])
@@ -504,6 +644,13 @@ class WeightedObjectives(om.ExplicitComponent):
         print(f"weighted_multi_obj = {outputs['weighted_multi_obj']}")
 
     def compute_partials(self, inputs, partials):
+        """
+        Computes analytical partial derivatives.
+
+        Args:
+            inputs (om.Vector): Input vector (not directly used, derivatives are constant).
+            partials (om.Jacobian): Jacobian object to store derivative values.
+        """
         w_values = self.options['w_values']
         r_values = self.options['r_values']
         num_objs = len(self.options['w_values'])
@@ -512,10 +659,24 @@ class WeightedObjectives(om.ExplicitComponent):
             partials['weighted_multi_obj', f'obj_{i}'] = w_values[i]/r_values[i]
 
 class WeightedOWT(om.ExplicitComponent):
+    """
+    Combines objective function values from multiple probabilistic cases.
+
+    Takes objective values from different analysis cases (e.g., different
+    environmental conditions) as inputs and computes a single weighted
+    average based on the probability of each case. The formula is:
+    sum(obj_i * probability_i).
+
+    Options:
+        p_values (list[float]): List of probabilities for each input objective/case.
+                                Should sum to 1.0 ideally.
+    """
     def initialize(self):
+        """Declares options for the WeightedOWT component."""
         self.options.declare('p_values', types=list, desc="List of probabilities associated with each k value")
     
     def setup(self):
+        """Defines inputs for case objectives and the combined output."""
         num_p = len(self.options['p_values'])
         
         for i in range(num_p):
@@ -524,11 +685,18 @@ class WeightedOWT(om.ExplicitComponent):
         self.add_output('weighted_multi_obj', val=0.0)
     
     def setup_partials(self):
+        """Declares analytical partial derivatives."""
         num_p = len(self.options['p_values'])
         for i in range(num_p):
             self.declare_partials('weighted_multi_obj', f'obj_{i}')
     
     def compute(self, inputs, outputs):
+        """Computes the probability-weighted sum of case objectives.
+
+        Args:
+            inputs (om.Vector): Input vector containing objective values from each case (obj_0, obj_1, ...).
+            outputs (om.Vector): Output vector where 'weighted_multi_obj' is stored.
+        """
         p_values = self.options['p_values']
         num_p = len(p_values)
         objs = [inputs[f'obj_{i}'] for i in range (num_p)]
@@ -540,12 +708,38 @@ class WeightedOWT(om.ExplicitComponent):
         print(f"weighted_multi_obj = {outputs['weighted_multi_obj']}")
 
     def compute_partials(self, inputs, partials):
+        """Computes analytical partial derivatives.
+
+        Args:
+            inputs (om.Vector): Input vector (not directly used).
+            partials (om.Jacobian): Jacobian object to store derivative values.
+        """
         p_values = self.options['p_values']
         num_p = len(p_values)
         for i in range(num_p):
             partials['weighted_multi_obj', f'obj_{i}'] = p_values[i]
 
 def run_weighted_opt(design, user_input, cases, p_values, calcuvate_path, output):
+    """Runs a RAFT optimization considering multiple probabilistic cases.
+
+    Sets up and executes an OpenMDAO problem where multiple OWT instances
+    (one for each case) are evaluated. Their individual weighted objectives
+    are then combined using probabilities in the WeightedOWT component.
+
+    Args:
+        design (dict): Base design dictionary.
+        user_input (dict): User input dictionary specifying optimization settings.
+        cases (dict): Dictionary containing case-specific data (e.g., environmental conditions).
+                      Expected format: {'data': [case_data_0, case_data_1, ...]}.
+        p_values (list[float]): List of probabilities corresponding to each case in `cases['data']`.
+        calcuvate_path (str): Path to the 'calcuvate.py' file.
+        output_log_file (str): Path to the file where stdout/stderr will be redirected.
+
+    Returns:
+        tuple: A tuple containing:
+            - dict: The final optimized design dictionary (potentially modified).
+            - dict: The user_input dictionary (potentially modified).
+    """
     current_directory = os.path.dirname(os.path.abspath(__file__))
     
     with open(output, "w") as output_file:
@@ -564,6 +758,23 @@ def run_weighted_opt(design, user_input, cases, p_values, calcuvate_path, output
             sys.stderr = original_stderr
 
 def raft_weighted_opt(design, user_input, cases, p_values, calcuvate_path):
+    """Core logic for setting up and running the weighted (probabilistic) optimization.
+
+    Internal function called by `run_weighted_opt`.
+
+    Args:
+        design (dict): Base design dictionary.
+        user_input (dict): User input dictionary.
+        cases (dict): Case-specific data.
+        p_values (list[float]): Case probabilities.
+        calcuvate_path (str): Path to 'calcuvate.py'.
+
+    Returns:
+        tuple: A tuple containing:
+            - dict: The final optimized design dictionary.
+            - dict: The user_input dictionary.
+    """
+
     global calcuvate
     calcuvate = import_calcuvate('calcuvate', calcuvate_path)
     
@@ -575,13 +786,6 @@ def raft_weighted_opt(design, user_input, cases, p_values, calcuvate_path):
 
     model = om.Group()
     n_cases = len(p_values)
-
-    # model.add_subsystem('weighted_raft_opt', WeightedObjectives(w_values=w_values, r_values=r_values))
-    
-    # for i, obj in enumerate(objective_function):
-    #     model.connect(f'{obj}', f'weighted_raft_opt.obj_{i}')
-    
-    # model.add_objective('weighted_raft_opt.weighted_multi_obj')
 
     for i in range(0, n_cases):
         print(f"case {i} = {cases['data'][i]}")
@@ -749,6 +953,22 @@ def run_opt(design, user_input, calcuvate_path, output):
             sys.stderr = original_stderr
 
 def raft_opt(design, user_input, calcuvate_path):
+    """
+    Core logic for setting up and running a standard (deterministic) optimization.
+
+    Internal function called by `run_opt`.
+
+    Args:
+        design (dict): Design dictionary.
+        user_input (dict): User input dictionary.
+        calcuvate_path (str): Path to 'calcuvate.py'.
+
+    Returns:
+        tuple: A tuple containing:
+            - dict: The final optimized design dictionary.
+            - dict: The user_input dictionary with updated design variable values.
+    """
+
     global calcuvate
     calcuvate = import_calcuvate('calcuvate', calcuvate_path)
     
@@ -867,6 +1087,28 @@ def raft_opt(design, user_input, calcuvate_path):
     return (optimized_design, user_input)
 
 def run_stability(design, user_input, calcuvate_path, output):
+    """
+    Runs only the stability adjustment step without full optimization.
+
+    This function is intended to adjust secondary design variables (e.g., ballast)
+    to meet stability requirements (e.g., zero pitch/roll offsets) for a
+    *given* set of primary design variables. It calls the `raft_stability`
+    function which performs this adjustment.
+
+    Args:
+        design (dict): Design dictionary with primary variables set.
+        user_input (dict): User input dictionary specifying stability settings
+                           (secondary variables, bounds, targets).
+        calcuvate_path (str): Path to the 'calcuvate.py' file.
+        output_log_file (str): Path to the file where stdout/stderr will be redirected.
+
+    Returns:
+        tuple: A tuple containing:
+            - dict: The design dictionary updated by calcuvate using the
+                    adjusted secondary variables.
+            - dict: The user_input dictionary, potentially with updated
+                    secondary variable values.
+    """
     with open(output, "w") as output_file:
         original_stdout = sys.stdout
         original_stderr = sys.stderr
@@ -883,7 +1125,26 @@ def run_stability(design, user_input, calcuvate_path, output):
             sys.stderr = original_stderr
 
 def raft_stability(design, user_input, calcuvate_path):
+    """
+    Core logic for performing stability adjustment.
 
+    Reads primary and secondary design variables from input dictionaries.
+    If `update_stability` is True in `user_input` for platform or mooring,
+    it calls `adjustStability.main` (which runs a sub-optimization) to find
+    the secondary variable values that minimize static offsets.
+    Finally, it uses `calcuvate` to update the design dictionary with both
+    primary and the (potentially adjusted) secondary variables.
+
+    Args:
+        design (dict): Input design dictionary.
+        user_input (dict): User input dictionary.
+        calcuvate_path (str): Path to 'calcuvate.py'.
+
+    Returns:
+        tuple: A tuple containing:
+            - dict: The updated design dictionary.
+            - dict: The user_input dictionary with potentially updated secondary variables.
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument('-df', '--design', default = design, help='Name of the design yaml file to run RAFT', type = str)
     parser.add_argument('-ui', '--user_input', default = user_input, help='Name of the User Input yaml file to run RAFT', type = str)

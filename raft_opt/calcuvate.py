@@ -18,6 +18,28 @@ def suppress_stdout():
             sys.stdout = old_stdout
 
 def _updateMoorings(x_mooring, x_platform, ms): 
+    
+    """
+    Updates the mooring system dictionary based on design variables.
+
+    Modifies the mooring system dictionary (`ms`) in place with values
+    from the mooring (`x_mooring`) and platform (`x_platform`) design
+    variable dictionaries. Updates anchor locations, fairlead locations,
+    and line lengths based on the provided variables.
+
+    Args:
+        x_mooring (dict): Dictionary of mooring design variables.
+                          Expected keys: 'x_anchor_trailing', 'y_anchor_trailing',
+                          'x_anchor_leading', 'y_anchor_leading', 'x_fairlead',
+                          'l_cable'.
+        x_platform (dict): Dictionary of platform design variables.
+                           Expected key: 'd_lower_pod'.
+        ms (dict): The mooring system section of the RAFT design dictionary.
+
+    Returns:
+        dict: The updated mooring system dictionary.
+    """
+
     water_depth = ms['water_depth']
     x_anchor_trailing = x_mooring['x_anchor_trailing']
     y_anchor_trailing = x_mooring['y_anchor_trailing']
@@ -58,6 +80,20 @@ def _updateMoorings(x_mooring, x_platform, ms):
     return (ms)
 
 def _updateColumns(upper_pod, lower_pod, x_platform):
+    """
+    Updates platform column member diameters based on design variables.
+
+    Modifies the upper_pod and lower_pod member dictionaries in place
+    with diameter values from the platform design variable dictionary.
+
+    Args:
+        upper_pod (dict): The upper pod member section of the RAFT design dictionary.
+        lower_pod (dict): The lower pod member section of the RAFT design dictionary.
+        x_platform (dict): Dictionary of platform design variables
+
+    Returns:
+        tuple: A tuple containing the updated upper_pod and lower_pod dictionaries.
+    """
     d_upper_pod = x_platform['d_upper_pod']
     
     upper_pod['d'][1] = d_upper_pod
@@ -72,6 +108,23 @@ def _updateColumns(upper_pod, lower_pod, x_platform):
     return (upper_pod, lower_pod)
 
 def calcuvate(design, x_platform, x_mooring):
+    """
+    Updates the RAFT design dictionary based on platform and mooring design variables.
+
+    This function acts as the interface between the optimizer's design variables
+    and the RAFT simulation model. It calls helper functions to update specific
+    parts of the design dictionary (platform columns, mooring system) based on
+    the current values of the design variables.
+
+    Args:
+        design (dict): The complete RAFT design dictionary.
+        x_platform (dict): Dictionary containing current platform design variables.
+        x_mooring (dict): Dictionary containing current mooring design variables.
+
+    Returns:
+        dict: The updated RAFT design dictionary, ready for simulation.
+    """
+     
     upper_pod = design['platform']['members'][0]
     lower_pod = design['platform']['members'][1]
     ms = design['mooring']
@@ -87,12 +140,45 @@ def calcuvate(design, x_platform, x_mooring):
     return (design)
 
 def power_mass_ratio(design=None, model=None, x_platform=None, x_mooring=None):
+    """
+    Calculates the negative power-to-mass ratio for the FOWT.
+
+    Used as an objective function (minimization implies maximizing power/mass).
+
+    Args:
+        design (dict, optional): The RAFT design dictionary. Defaults to None.
+        model (raft.Model, optional): The executed RAFT model object. Defaults to None.
+        x_platform (dict, optional): Dictionary of platform design variables. Defaults to None.
+        x_mooring (dict, optional): Dictionary of mooring design variables. Defaults to None.
+
+    Returns:
+        float: The negative of (rotor aerodynamic power / platform shell mass).
+               Returns a large number (or handles error) if model results are unavailable.
+    """
+
     power_mass_ratio = -1*(model.fowtList[0].rotorList[0].aero_power/model.fowtList[0].m_shell)
 
 
     return power_mass_ratio
 
 def intersect_dist_1(design=None, model=None, x_platform=None, x_mooring=None):
+    """
+    Calculates the minimum distance between the rotor plane and mooring line 1 (Used for tidal turbines)
+
+    Determines the point on mooring line 1 (anchor A to fairlead A) that is
+    closest to the rotor center and calculates the distance. Used as a constraint
+    to prevent mooring line/rotor interaction.
+
+    Args:
+        design (dict, optional): The RAFT design dictionary. Defaults to None.
+        model (raft.Model, optional): The executed RAFT model object. Defaults to None.
+        x_platform (dict, optional): Dictionary of platform design variables. Defaults to None.
+        x_mooring (dict, optional): Dictionary of mooring design variables. Defaults to None.
+
+    Returns:
+        float: The minimum distance between the rotor center and mooring line 1.
+               Returns a small number (or handles error) if calculation fails.
+    """
     x_rotor = design['turbine']['rotorCoords'][0][0]
     y_rotor = design['turbine']['rotorCoords'][0][1]
     z_rotor = design['turbine']['Zhub']
